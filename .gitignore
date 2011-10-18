@@ -6,7 +6,9 @@ tmp/
 *.log
 doc/
 *.swp
+*.swo
 *~
 .project
 .DS_Store
+.autotest
 
