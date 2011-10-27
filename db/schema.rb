@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(:version => 20111026221915) do
 
   add_index "questionaries", ["created_at"], :name => "index_questionaries_on_created_at"
 
+  create_table "questions", :force => true do |t|
+    t.integer "num"
+    t.text    "content"
+    t.integer "questionary_id"
+  end
+
+  add_index "questions", ["num"], :name => "index_questions_on_num"
+  add_index "questions", ["questionary_id"], :name => "index_questions_on_questionary_id"
+
   create_table "results", :force => true do |t|
     t.text    "information"
     t.integer "questionary_id"
