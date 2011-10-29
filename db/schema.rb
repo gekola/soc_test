@@ -11,16 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111026221915) do
+ActiveRecord::Schema.define(:version => 20111029143622) do
 
-  create_table "answers", :force => true do |t|
-    t.integer "num"
-    t.text    "content"
-    t.integer "question_id"
-  end
-
-  add_index "answers", ["num"], :name => "index_answers_on_num"
-  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
+# Could not dump table "answers" because of following StandardError
+#   Unknown type 'bool' for column 'verified'
 
   create_table "questionaries", :force => true do |t|
     t.string   "name"
@@ -31,14 +25,8 @@ ActiveRecord::Schema.define(:version => 20111026221915) do
 
   add_index "questionaries", ["created_at"], :name => "index_questionaries_on_created_at"
 
-  create_table "questions", :force => true do |t|
-    t.integer "num"
-    t.text    "content"
-    t.integer "questionary_id"
-  end
-
-  add_index "questions", ["num"], :name => "index_questions_on_num"
-  add_index "questions", ["questionary_id"], :name => "index_questions_on_questionary_id"
+# Could not dump table "questions" because of following StandardError
+#   Unknown type 'bool' for column 'extra_answer'
 
   create_table "results", :force => true do |t|
     t.text    "information"
