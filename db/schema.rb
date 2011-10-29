@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20111029143622) do
 
-# Could not dump table "answers" because of following StandardError
-#   Unknown type 'bool' for column 'verified'
-
   create_table "questionaries", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -24,9 +21,6 @@ ActiveRecord::Schema.define(:version => 20111029143622) do
   end
 
   add_index "questionaries", ["created_at"], :name => "index_questionaries_on_created_at"
-
-# Could not dump table "questions" because of following StandardError
-#   Unknown type 'bool' for column 'extra_answer'
 
   create_table "results", :force => true do |t|
     t.text    "information"
