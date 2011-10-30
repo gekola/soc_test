@@ -13,6 +13,18 @@
 
 ActiveRecord::Schema.define(:version => 20111029143622) do
 
+  create_table "answers", :force => true do |t|
+    t.integer "num"
+    t.text    "content"
+    t.integer "question_id"
+    t.boolean "verified"
+    t.integer "result_id"
+  end
+
+  add_index "answers", ["num"], :name => "index_answers_on_num"
+  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
+  add_index "answers", ["verified"], :name => "index_answers_on_verified"
+
   create_table "questionaries", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -21,6 +33,17 @@ ActiveRecord::Schema.define(:version => 20111029143622) do
   end
 
   add_index "questionaries", ["created_at"], :name => "index_questionaries_on_created_at"
+
+  create_table "questions", :force => true do |t|
+    t.integer "num"
+    t.text    "content"
+    t.integer "questionary_id"
+    t.boolean "extra_answer"
+    t.integer "multians"
+  end
+
+  add_index "questions", ["num"], :name => "index_questions_on_num"
+  add_index "questions", ["questionary_id"], :name => "index_questions_on_questionary_id"
 
   create_table "results", :force => true do |t|
     t.text    "information"

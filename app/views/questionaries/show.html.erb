@@ -1,0 +1,17 @@
+<table class="questionary">
+  <tr>
+    <td>
+      <strong>Name:</strong> <%= @questionary.name %> <br />
+      <strong>Discription:</strong> <%= @questionary.description %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <% unless @questionary.questions.empty? %>
+        <table class="questions" summary="Questions">
+          <%= render @questions %>
+        </table>
+      <% end %>
+    </td>
+  </tr>
+</table>
