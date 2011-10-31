@@ -5,4 +5,7 @@ class Question < ActiveRecord::Base
 
   belongs_to :questionary
 
+  validates :num, :presence => true
+  validates :content, :presence => true
+
 end
