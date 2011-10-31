@@ -5,4 +5,9 @@ class QuestionariesController < ApplicationController
     @questions = @questionary.questions
     @title = @questionary.name
   end
+
+  def index
+    @title = "All questionaries"
+    @questionaries = Questionary.all
+  end
 end

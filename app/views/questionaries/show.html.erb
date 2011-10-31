@@ -4,14 +4,12 @@
       <strong>Name:</strong> <%= @questionary.name %> <br />
       <strong>Discription:</strong> <%= @questionary.description %>
     </td>
-  </tr>
-  <tr>
     <td>
-      <% unless @questionary.questions.empty? %>
-        <table class="questions" summary="Questions">
+      <dl>
+        <% unless @questionary.questions.empty? %>
           <%= render @questions %>
-        </table>
-      <% end %>
+        <% end %>
+      </dl>
     </td>
   </tr>
 </table>

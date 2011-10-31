@@ -1,15 +1,19 @@
+Factory.sequence(:question_id) { |n| n }
+Factory.sequence(:questionary_id) { |n| n }
+
 Factory.define :questionary do |questionary|
-  questionary.name          "Cinema"
-  questionary.description   "Cinema influence"
+  questionary.after_build do |qry|
+    id = Factory.next :questionary_id
+    qry.name = "Questionary_#{id}"
+    qry.description = "This is a discription of the questionary ##{id}"
+  end
 end
 
-Factory.sequence(:question_id) { |n| n }
-
-Factory.define :question do |q|
-  q.after_build do |question|
+Factory.define :question do |question|
+  question.after_build do |qon|
     id = Factory.next :question_id
-    question.num = id
-    question.content = "Question_#{id}"
+    qon.num = id
+    qon.content = "Question_#{id}"
   end
-  q.association :questionary
+  question.association :questionary
 end

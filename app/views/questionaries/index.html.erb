@@ -1,0 +1,10 @@
+<h1>All questionaries</h1>
+
+<table>
+  <% @questionaries.each do |questionary| %>
+    <tr>
+      <td><%= link_to questionary.name, questionary %></td>
+      <td><%= questionary.description %></td>
+    </tr>
+  <% end %>
+</table>
