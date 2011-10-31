@@ -2,8 +2,8 @@
   <span class="number"><%= question.num %>.</span>
   <span class="content"><%= question.content %> </span>
   <% unless question.answers.empty? %>
-   <table class="answers">
-    <%= render @answers %>
-   </table>
+    <dl>
+      <%= render question.answers %>
+    </dl>
   <% end %>
 </dd>
