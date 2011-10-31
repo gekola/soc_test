@@ -1,5 +1,6 @@
 Factory.sequence(:question_id) { |n| n }
 Factory.sequence(:questionary_id) { |n| n }
+Factory.sequence(:answer_id) { |n| n }
 
 Factory.define :questionary do |questionary|
   questionary.after_build do |qry|
@@ -16,4 +17,13 @@ Factory.define :question do |question|
     qon.content = "Question_#{id}"
   end
   question.association :questionary
+end
+
+Factory.define :answer do |answer|
+  answer.after_build do |ans|
+    id = Factory.next :answer_id
+    ans.num = id
+    ans.content = "Answer_#{id}"
+  end
+  answer.association :question
 end
