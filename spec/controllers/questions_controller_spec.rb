@@ -24,8 +24,8 @@ describe QuestionsController do
       a1 = Factory(:answer, :question => @question)
       a2 = Factory(:answer, :question => @question)
       get :show, :id => @question
-      response.should have_selector("tr.answer", :content => a1.content)
-      response.should have_selector("tr.answer", :content => a2.content)
+      response.should have_selector("dd", :content => a1.content)
+      response.should have_selector("dd", :content => a2.content)
     end
   end
 end
