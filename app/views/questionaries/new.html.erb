@@ -1,0 +1,15 @@
+<h1> Creating a new questionary </h1>
+<%= render 'shared/questionary_error_messages' %>
+<%= form_for(@questionary) do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Create" %>
+  </div>  
+<% end %>

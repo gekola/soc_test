@@ -58,6 +58,71 @@ describe QuestionariesController do
       response.should have_selector("span.content", :content => q2.content)
     end
   end
+  
+  describe "GET 'new'" do
+    
+    it "should be successful" do
+      get :new
+      response.should be_success
+    end
+    
+    it "should have the right title" do
+      get :new
+      response.should have_selector("title", :content => "Creating new questionary")
+    end    
+  end
+  
+  describe "POST 'create'" do
+    
+    describe "testing failures:" do
+      
+      before (:each) do
+	@attr = { :name => "", :description => "" }
+      end
+      
+      it "should not create a questionary with empty attr" do
+	lambda do
+	  post :create, :questionary => @attr
+	end.should_not change(Questionary, :count)
+      end
+      
+      it "should stay on 'new' page if creating failed" do
+	lambda do
+	  post :create, :questionary => @attr
+	  response.should render_template(:new)
+	end
+      end
+      
+      it "should show an error explanation if creating failed" do
+	lambda do
+	  post :create, :questionary => @attr
+	  response.should have_selector("div#error_explanation", :content => "prohibited this questionary
+	                                form being saved:")
+	end
+      end
+    end
+    
+    describe "testing success:" do
+      
+      before(:each) do
+	@attr = { :name => "TestQuestionary", :description => "Description of test questionary" }
+      end
+      
+      it "create a valid questionary" do
+	lambda do
+	  post :create, :questionary => @attr
+	end.should change(Questionary, :count).by(1)
+      end
+      
+      # next test may be changed, maybe it should redirect to other page
+      it "should redirect to the questionary show page" do
+	lambda do
+	  post :create, :questionary => @attr
+	  response.should redirect_to(questionary_path(assigns(:questionary)))
+	end
+      end	
+    end  
+  end
 
   describe "questions associations" do
 
