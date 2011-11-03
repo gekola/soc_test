@@ -108,7 +108,7 @@ describe QuestionariesController do
 	@attr = { :name => "TestQuestionary", :description => "Description of test questionary" }
       end
       
-      it "create a valid questionary" do
+      it "should create a valid questionary" do
 	lambda do
 	  post :create, :questionary => @attr
 	end.should change(Questionary, :count).by(1)

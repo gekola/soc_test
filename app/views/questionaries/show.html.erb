@@ -23,7 +23,8 @@
           <% end %>
         </dd>
       </dl>
-      <%= link_to 'create a new question','#', :class => 'actions' %>
+      <%= link_to 'create a new question',{ :controller => :questions, :action => :new, 
+                                            :questionary_id => @questionary }, :class => 'actions' %>
     </td>
   </tr>
 </table>
