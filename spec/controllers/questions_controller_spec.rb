@@ -75,8 +75,7 @@ describe QuestionsController do
       it "should show an error explanation if creating failed" do
 	lambda do
 	  post :create, :questionary => {:id => @questionary},  :question => @attr
-	  response.should have_selector("div#error_explanation", :content => "prohibited this questionary
-	                                form being saved:")
+	  response.should have_selector("div#error_explanation", :content => "prohibited this questionary form being saved:")
 	end
       end
     end
@@ -100,5 +99,5 @@ describe QuestionsController do
 	end
       end	
     end  
-  end
+  end  
 end
