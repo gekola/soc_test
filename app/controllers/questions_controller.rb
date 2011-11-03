@@ -15,7 +15,6 @@ class QuestionsController < ApplicationController
   def create
     @questionary = Questionary.find_by_id(params[:questionary][:id])
     @question = @questionary.questions.build(params[:question])
-    @question.update_attributes(params[:question])
     if @question.save
       redirect_to @question
     else
