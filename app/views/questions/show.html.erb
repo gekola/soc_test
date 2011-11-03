@@ -1,1 +1,11 @@
-<%= render @question %>
+<%= render :partial => 'question_header', :locals =>
+           { :question => @question } %>
+<%= render :partial => 'question_links', :locals =>
+           { :question => @question, :links_type => "edit&delete" } %>
+<dl>
+  <% @question.answers.each do |answer| %>
+    <%= render :partial => 'answers/answer', :locals =>
+               { :answer => answer, :links_type => "with" } %>
+  <% end %>
+</dl>
+<%= link_to 'create a new answer','#', :class => 'actions' %>

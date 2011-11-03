@@ -1,3 +1,7 @@
 <dd>
   <%= answer.num %>) <%= answer.content%>
+  <% unless links_type=="without" %>
+    <%= link_to 'edit','#', :class => "actions" %>
+    <%= link_to 'delete','#', :class => "actions" %>
+  <% end %>
 </dd>

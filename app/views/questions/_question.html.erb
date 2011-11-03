@@ -1,9 +1,0 @@
-<dd>
-  <span class="number"><%= question.num %>.</span>
-  <span class="content"><%= question.content %> </span>
-  <% unless question.answers.empty? %>
-    <dl>
-      <%= render question.answers %>
-    </dl>
-  <% end %>
-</dd>

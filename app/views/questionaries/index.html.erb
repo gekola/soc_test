@@ -5,6 +5,10 @@
     <tr>
       <td><%= link_to questionary.name, questionary %></td>
       <td><%= questionary.description %></td>
+      <td><%= link_to 'edit',questionary, :class => "actions" %>
+      <%= link_to 'delete','#', :class => "actions" %></td>
     </tr>
   <% end %>
 </table>
+<%= link_to 'create a new questionary','new', :class => "actions" %>
+

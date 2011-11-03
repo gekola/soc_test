@@ -2,14 +2,28 @@
   <tr>
     <td>
       <strong>Name:</strong> <%= @questionary.name %> <br />
-      <strong>Discription:</strong> <%= @questionary.description %>
+      <strong>Discription:</strong> <%= @questionary.description %> <br />
+      <%= link_to 'edit','#', :class => "actions" %>
+      <%= link_to 'delete','#', :class => "actions" %>
     </td>
     <td>
       <dl>
-        <% unless @questionary.questions.empty? %>
-          <%= render @questions %>
-        <% end %>
+        <dd>
+          <% @questionary.questions.each do |question| %>
+            <%= render :partial => 'questions/question_header', :locals =>
+                       { :question => question } %>
+            <%= render :partial => 'questions/question_links', :locals =>
+                       { :question => question, :links_type => "show&delete" } %>
+            <dl>
+              <% question.answers.each do |answer| %>
+                <%= render :partial => 'answers/answer', :locals =>
+                           { :answer => answer, :links_type => "without" } %>
+              <% end %>
+            </dl>
+          <% end %>
+        </dd>
       </dl>
+      <%= link_to 'create a new question','#', :class => 'actions' %>
     </td>
   </tr>
 </table>
