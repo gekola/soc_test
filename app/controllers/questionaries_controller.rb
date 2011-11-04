@@ -1,4 +1,5 @@
 class QuestionariesController < ApplicationController
+  before_filter :authorize
 
   def show
     @questionary = Questionary.find(params[:id])
@@ -10,12 +11,12 @@ class QuestionariesController < ApplicationController
     @title = "All questionaries"
     @questionaries = Questionary.all
   end
-  
+
   def new
     @questionary = Questionary.new
     @title = "Creating new questionary"
   end
-  
+
   def create
     @questionary = Questionary.new(params[:questionary])
     if @questionary.save

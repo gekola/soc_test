@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to :questionaries
+    redirect_to :root
   end
 
   private

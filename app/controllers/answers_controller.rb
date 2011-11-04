@@ -1,11 +1,12 @@
 class AnswersController < ApplicationController
-  
+  before_filter :authorize
+
   def new
     @question = Question.find_by_id(params[:question_id])
     @answer = Answer.new
     @title = "Creating new answer"
   end
-  
+
   def create
     @question = Question.find_by_id(params[:question][:id])
     @answer = @question.answers.build(params[:answer])
@@ -15,12 +16,12 @@ class AnswersController < ApplicationController
       render :new
     end
   end
-  
+
   def edit
     @answer = Answer.find(params[:id])
     @title = "Edit answer"
   end
-  
+
   def update
     @answer = Answer.find(params[:id])
     if @answer.update_attributes(params[:answer])
@@ -29,7 +30,7 @@ class AnswersController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     @answer = Answer.find(params[:id])
     @answer.destroy
