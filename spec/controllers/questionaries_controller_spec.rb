@@ -3,6 +3,11 @@ require 'spec_helper'
 describe QuestionariesController do
   render_views
 
+  before(:each) do
+    session[:authorized] = true
+    session[:ip] = request.remote_ip
+  end
+
   describe "GET 'index'" do
     before(:each) do
       @questionaries = []
@@ -29,7 +34,7 @@ describe QuestionariesController do
     end
 
     it "should show links for authorized visitor" do
-      get :index, nil, {:authorized => true, :ip => @request.remote_ip}
+      get :index
       @questionaries.each do |questionary|
         response.should have_selector("a", :href => questionary_path(questionary), :content => "edit")
       end
@@ -37,7 +42,7 @@ describe QuestionariesController do
     end
 
     it "shouldn't show links for unauthorized visitor" do
-      get :index
+      get :index, nil, :authorized => false
       @questionaries.each do |questionary|
         response.should_not have_selector("a", :href => questionary_path(questionary), :content => "edit")
       end
@@ -77,7 +82,7 @@ describe QuestionariesController do
     it "should show links for authorized visitor" do
       q1 = Factory(:question, :questionary => @questionary)
       q2 = Factory(:question, :questionary => @questionary)
-      get :show, {:id => @questionary}, {:authorized => true, :ip => @request.remote_ip}
+      get :show, :id => @questionary
       response.should have_selector("a", :href => question_path(q1))
       response.should have_selector("a", :href => question_path(q2))
       response.should have_selector("a", :href => "#{new_question_path}?questionary_id=#{@questionary.id}")
@@ -86,7 +91,7 @@ describe QuestionariesController do
     it "shouldn't show links for unauthorized visitor" do
       q1 = Factory(:question, :questionary => @questionary)
       q2 = Factory(:question, :questionary => @questionary)
-      get :show, :id => @questionary
+      get :show, {:id => @questionary}, {:authorized => false}
       response.should_not have_selector("a", :href => question_path(q1))
       response.should_not have_selector("a", :href => question_path(q2))
       response.should_not have_selector("a", :href => "#{new_question_path}?questionary_id=#{@questionary.id}")
@@ -157,32 +162,32 @@ describe QuestionariesController do
       end
     end
   end
-  
+
   describe "GET 'edit'" do
-    
+
     before(:each) do
       @questionary = Factory(:questionary)
     end
-    
+
     it "should be successful" do
       get :edit, :id => @questionary
       response.should be_success
     end
-    
+
     it "should have the right title" do
       get :edit, :id => @questionary
       response.should have_selector("title", :content => "Edit questionary")
     end
   end
-  
+
   describe "PUT 'update'" do
-    
+
     before(:each) do
       @questionary = Factory(:questionary)
     end
-    
+
     describe "testing failure:" do
-      
+
       before (:each) do
 	@attr = { :name => "", :description => "" }
       end
@@ -202,9 +207,9 @@ describe QuestionariesController do
 	end
       end
     end
-    
+
     describe "testing success:" do
-      
+
       before(:each) do
 	@attr = { :name => "ChQuestionary", :description => "Ch description of test questionary" }
       end
@@ -226,7 +231,7 @@ describe QuestionariesController do
       end
     end
   end
-  
+
   describe "DELETE 'destroy'" do
 
     before(:each) do

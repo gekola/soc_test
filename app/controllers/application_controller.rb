@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protected
 
     def authorized?
-      if session[:authorized] && session[:ip] == request.remote_ip
+      if !APP_CONFIG['perform_authentication'] || (session[:authorized] && session[:ip] == request.remote_ip)
         return true
       else
         return false
