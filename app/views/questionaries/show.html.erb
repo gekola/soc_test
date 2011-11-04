@@ -31,3 +31,6 @@
     </td>
   </tr>
 </table>
+<% if authorized? %>
+  <%= link_to 'back to questionaries index', questionaries_path, :class => 'actions' %>
+<% end %>
