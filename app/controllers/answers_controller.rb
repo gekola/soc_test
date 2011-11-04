@@ -15,4 +15,24 @@ class AnswersController < ApplicationController
       render :new
     end
   end
+  
+  def edit
+    @answer = Answer.find(params[:id])
+    @title = "Edit answer"
+  end
+  
+  def update
+    @answer = Answer.find(params[:id])
+    if @answer.update_attributes(params[:answer])
+      redirect_to @answer.question
+    else
+      render :edit
+    end
+  end
+  
+  def destroy
+    @answer = Answer.find(params[:id])
+    @answer.destroy
+    redirect_to @answer.question
+  end
 end

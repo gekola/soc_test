@@ -157,6 +157,93 @@ describe QuestionariesController do
       end
     end
   end
+  
+  describe "GET 'edit'" do
+    
+    before(:each) do
+      @questionary = Factory(:questionary)
+    end
+    
+    it "should be successful" do
+      get :edit, :id => @questionary
+      response.should be_success
+    end
+    
+    it "should have the right title" do
+      get :edit, :id => @questionary
+      response.should have_selector("title", :content => "Edit questionary")
+    end
+  end
+  
+  describe "PUT 'update'" do
+    
+    before(:each) do
+      @questionary = Factory(:questionary)
+    end
+    
+    describe "testing failure:" do
+      
+      before (:each) do
+	@attr = { :name => "", :description => "" }
+      end
+
+      it "should stay on 'edit' page if creating failed" do
+	lambda do
+	  post :update, :id => @questionary, :questionary => @attr
+	  response.should render_template(:edit)
+	end
+      end
+
+      it "should show an error explanation if edit failed" do
+	lambda do
+	  post :update, :id => @questionary, :questionary => @attr
+	  response.should have_selector("div#error_explanation", :content => "prohibited this questionary
+	                                form being saved:")
+	end
+      end
+    end
+    
+    describe "testing success:" do
+      
+      before(:each) do
+	@attr = { :name => "ChQuestionary", :description => "Ch description of test questionary" }
+      end
+
+      it "should change a questionary attributes" do
+	lambda do
+	  post :update, :id => @questionary, :questionary => @attr
+	  @questionary.reload
+	  @questionary.name.should == @attr[:name]
+	  @questionary.description.should == @attr[:description]
+	end
+      end
+
+      it "should redirect to the questionary show page" do
+	lambda do
+	  post :update, :id => @questionary, :questionary => @attr
+	  response.should redirect_to(questionary_path(@questionary))
+	end
+      end
+    end
+  end
+  
+  describe "DELETE 'destroy'" do
+
+    before(:each) do
+      @questionary = Factory(:questionary)
+    end
+
+    it "should destroy the questionary" do
+      lambda do
+        delete :destroy, :id => @questionary
+      end.should change(Questionary, :count).by(-1)
+    end
+
+    it "should redirect to the questionaries index page" do
+      delete :destroy, :id => @questionary
+      response.should redirect_to(questionaries_path)
+    end
+  end
 
   describe "questions associations" do
 

@@ -1,9 +1,9 @@
-<h1> Creating a new answer</h1>
+<h1> Edit an answer</h1>
 <%= form_for(@answer) do |form| %>
   <%= render 'shared/object_error_messages', :object => form.object %>
   <div class="field"> 
     <%= form.label :num %>
-    <%= form.text_field :num, :value => (@question.answers.count+1).to_s %>
+    <%= form.text_field :num, :value => @answer.num.to_s %>
   </div>
   <div class="field">
     <%= form.label :content %>
@@ -11,9 +11,10 @@
   </div>
   <div class="field">
     <%= form.label :question %>
+    <% @question = @answer.question %>
     <%= collection_select :question, :id ,Question.where(:questionary_id => @question.questionary), :id, :to_format_s %>
   </div>
   <div class="actions">
-    <%= form.submit "Create" %>
+    <%= form.submit "Update" %>
   </div>  
 <% end %>

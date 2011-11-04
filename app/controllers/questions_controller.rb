@@ -22,6 +22,27 @@ class QuestionsController < ApplicationController
     end
   end
   
+  def edit
+    @question = Question.find(params[:id])
+    @title = "Edit question"
+  end
+  
+  def update
+    @question = Question.find(params[:id])
+    if @question.update_attributes(params[:question])
+      redirect_to @question
+    else
+      render :edit
+    end
+  end
+  
   def destroy
+    #@question = Question.find(params[:id])
+    #redir_url = url_for(@question.questionary)
+    #@question.destroy
+    #redirect_to redir_url
+    @question = Question.find(params[:id])
+    @question.destroy
+    redirect_to @question.questionary
   end
 end

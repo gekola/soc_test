@@ -8,7 +8,8 @@
       <% if authorized? %>
         <td>
           <%= link_to 'edit',questionary, :class => "actions" %>
-          <%= link_to 'delete','#', :class => "actions" %>
+           <%= link_to 'delete', questionary, :method => :delete, 
+                       :confirm => "Delete questionary #{questionary.name}\nAre you sure?", :class => "actions" %>
         </td>
     <% end %>
     </tr>

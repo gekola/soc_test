@@ -98,7 +98,95 @@ describe QuestionsController do
 	end
       end	
     end  
-  end  
+  end 
+  
+  describe "GET 'edit'" do
+    
+    before(:each) do
+      @question = Factory(:question)
+    end
+    
+    it "should be successful" do
+      get :edit, :id => @question
+      response.should be_success
+    end
+    
+    it "should have the right title" do
+      get :edit, :id => @question
+      response.should have_selector("title", :content => "Edit question")
+    end
+  end
+  
+  describe "PUT 'update'" do
+    
+    before(:each) do
+      @question = Factory(:question)
+    end
+    
+    describe "testing failure:" do
+      
+      before (:each) do
+	@attr = { :num => "", :content => "" }
+      end
+
+      it "should stay on 'edit' page if creating failed" do
+	lambda do
+	  post :update, :id => @question, :question => @attr
+	  response.should render_template(:edit)
+	end
+      end
+
+      it "should show an error explanation if edit failed" do
+	lambda do
+	  post :update, :id => @question, :question => @attr
+	  response.should have_selector("div#error_explanation", :content => "prohibited this question
+	                                form being saved:")
+	end
+      end
+    end
+    
+    describe "testing success:" do
+      
+      before(:each) do
+	@attr = { :num => 20, :content => "Ch test question?" }
+      end
+
+      it "should change a question attributes" do
+	lambda do
+	  post :update, :id => @question, :question => @attr
+	  @question.reload
+	  @question.num.should == @attr[:num]
+	  @question.content.should == @attr[:content]
+	end
+      end
+
+      it "should redirect to the question show page" do
+	lambda do
+	  post :update, :id => @question, :question => @attr
+	  response.should redirect_to(question_path(@question))
+	end
+      end
+    end
+  end
+  
+  describe "DELETE 'destroy'" do
+
+    before(:each) do
+      @questionary = Factory(:questionary)
+      @question = Factory(:question, :questionary => @questionary)
+    end
+
+    it "should destroy the question" do
+      lambda do
+        delete :destroy, :id => @question
+      end.should change(Question, :count).by(-1)
+    end
+
+    it "should redirect to the questionary show page" do
+      delete :destroy, :id => @question
+      response.should redirect_to(@questionary)
+    end
+  end
   
   describe "answers associations" do
 

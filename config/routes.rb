@@ -2,7 +2,7 @@ SocTest::Application.routes.draw do
 
   resources :questionaries
   resources :questions
-  resources :answers, :only => [:new, :create, :destroy]
+  resources :answers, :only => [:new, :create, :destroy, :edit, :update]
   resources :sessions, :only => [:new, :create, :destroy]
 
   root :to => 'pages#home'

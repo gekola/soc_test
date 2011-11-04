@@ -27,4 +27,23 @@ class QuestionariesController < ApplicationController
       render :new
     end
   end
+  
+  def edit
+    @questionary = Questionary.find(params[:id])
+    @title = "Edit questionary"
+  end
+  
+  def update
+    @questionary = Questionary.find(params[:id])
+    if @questionary.update_attributes(params[:questionary])
+      redirect_to @questionary
+    else
+      render :edit
+    end
+  end
+  
+  def destroy
+    Questionary.find(params[:id]).destroy
+    redirect_to questionaries_path
+  end
 end

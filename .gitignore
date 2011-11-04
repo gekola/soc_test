@@ -3,6 +3,7 @@ db/*.sqlite3*
 bin/
 log/*.log
 tmp/
+vendor/bundle/
 .sass-cache/
 *.log
 doc/

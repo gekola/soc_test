@@ -2,7 +2,8 @@
   <% if links_type=="show&delete" %>
     <%= link_to 'edit',question, :class => "actions" %>
   <% else %>
-    <%= link_to 'edit','#', :class => "actions" %>
+    <%= link_to 'edit',edit_question_path, :class => "actions" %>
   <% end %>
-  <%= link_to 'delete','#', :class => "actions" %>
+   <%= link_to 'delete', question, :method => :delete, 
+               :confirm => "Delete question #{question.num}. #{question.content}\nAre you sure?", :class => "actions" %>
 <% end %>

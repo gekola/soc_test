@@ -1,4 +1,4 @@
-<h1> Creating a new questionary </h1>
+<h1> Edit a questionary </h1>
 <%= form_for(@questionary) do |form| %>
   <%= render 'shared/object_error_messages', :object => form.object %>
   <div class="field">
@@ -10,7 +10,7 @@
     <%= form.text_field :description %>
   </div>
   <div class="actions">
-    <%= form.submit "Create" %>
+    <%= form.submit "Update" %>
   </div>  
 <% end %>
 

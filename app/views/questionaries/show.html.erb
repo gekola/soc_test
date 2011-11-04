@@ -4,8 +4,9 @@
       <strong>Name:</strong> <%= @questionary.name %> <br />
       <strong>Discription:</strong> <%= @questionary.description %> <br />
       <% if authorized? %>
-        <%= link_to 'edit','#', :class => "actions" %>
-        <%= link_to 'delete','#', :class => "actions" %>
+        <%= link_to 'edit',edit_questionary_path, :class => "actions" %>
+        <%= link_to 'delete', @questionary, :method => :delete, 
+                    :confirm => "Delete questionary #{@questionary.name}\nAre you sure?", :class => "actions" %>
       <% end %>
     </td>
     <td>

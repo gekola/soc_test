@@ -1,9 +1,9 @@
-<h1> Creating a new question for questionary</h1>
+<h1> Edit a question</h1>
 <%= form_for(@question) do |form| %>
   <%= render 'shared/object_error_messages', :object => form.object %>
   <div class="field">
     <%= form.label :num %>
-    <%= form.text_field :num, :value => (@questionary.questions.count+1).to_s %>
+    <%= form.text_field :num, :value => @question.num.to_s %>
   </div>
   <div class="field">
     <%= form.label :content %>
@@ -14,6 +14,6 @@
     <%= collection_select :questionary, :id ,Questionary.all, :id, :name %>
   </div>
   <div class="actions">
-    <%= form.submit "Create" %>
+    <%= form.submit "Update" %>
   </div>  
 <% end %>
