@@ -5,7 +5,7 @@ class Question < ActiveRecord::Base
 
   belongs_to :questionary
 
-  validates_uniqueness_of :num, :scope => :questionary_id
+  validates_uniqueness_of :questionary_id, :scope => :num
 
   validates :num, :presence => true
   validates :content, :presence => true, :length => { :maximum => 140 }
