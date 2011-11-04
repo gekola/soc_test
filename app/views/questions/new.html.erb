@@ -3,7 +3,7 @@
 <%= form_for(@question) do |form| %>
   <div class="field">
     <%= form.label :num %>
-    <%= form.text_field :num %>
+    <%= form.text_field :num, :value => (@questionary.questions.count+1).to_s %>
   </div>
   <div class="field">
     <%= form.label :content %>

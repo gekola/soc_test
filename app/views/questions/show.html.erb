@@ -9,5 +9,5 @@
   <% end %>
 </dl>
 <% if authorized? %>
-  <%= link_to 'create a new answer','#', :class => 'actions' %>
+  <%= link_to 'create a new answer',new_answer_path(:question_id => @question), :class => 'actions' %>
 <% end %>

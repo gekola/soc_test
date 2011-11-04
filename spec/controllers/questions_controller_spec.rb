@@ -58,9 +58,8 @@ describe QuestionsController do
 	@attr = { :num => "", :content => "" }
       end
       
-      it "should not create a questionary with empty attr" do
+      it "should not create a question with empty attr" do
 	lambda do
-	  @questionary = Factory(:questionary)
 	  post :create, :questionary => {:id => @questionary}, :question => @attr
 	end.should_not change(Question, :count)
       end
@@ -75,7 +74,7 @@ describe QuestionsController do
       it "should show an error explanation if creating failed" do
 	lambda do
 	  post :create, :questionary => {:id => @questionary},  :question => @attr
-	  response.should have_selector("div#error_explanation", :content => "prohibited this questionary form being saved:")
+	  response.should have_selector("div#error_explanation", :content => "prohibited this question form being saved:")
 	end
       end
     end
@@ -100,4 +99,28 @@ describe QuestionsController do
       end	
     end  
   end  
+  
+  describe "answers associations" do
+
+    before (:each) do
+      @question = Factory(:question)
+      @a1 = Factory(:answer, :question => @question)
+      @a2 = Factory(:answer, :question => @question)
+    end
+
+    it "should have a answers attribute" do
+      @question.should respond_to(:answers)
+    end
+
+    it "should have the right answer" do
+      @question.answers.should == [@a1, @a2]
+    end
+
+    it "should destroy associated questions" do
+      @question.destroy
+      [@a1, @a2].each do |answer|
+        Answer.find_by_id(answer).should be_nil
+      end
+    end
+  end
 end
