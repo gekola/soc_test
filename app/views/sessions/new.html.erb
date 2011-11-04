@@ -1,0 +1,11 @@
+<h1>Authentication</h1>
+
+<%= form_for(:session, :url => sessions_path) do |f| %>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Authenticate" %>
+  </div>
+<% end %>

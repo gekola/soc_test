@@ -22,11 +22,27 @@ describe QuestionariesController do
     end
 
     it "should have an element for each questionary" do
-        get :index
-        @questionaries.each do |questionary|
-          response.should have_selector("td", :content => questionary.name)
-        end
+      get :index
+      @questionaries.each do |questionary|
+        response.should have_selector("td", :content => questionary.name)
       end
+    end
+
+    it "should show links for authorized visitor" do
+      get :index, nil, {:authorized => true, :ip => @request.remote_ip}
+      @questionaries.each do |questionary|
+        response.should have_selector("a", :href => questionary_path(questionary), :content => "edit")
+      end
+      response.should have_selector("a", :href => new_questionary_path)
+    end
+
+    it "shouldn't show links for unauthorized visitor" do
+      get :index
+      @questionaries.each do |questionary|
+        response.should_not have_selector("a", :href => questionary_path(questionary), :content => "edit")
+      end
+      response.should_not have_selector("a", :href => new_questionary_path)
+    end
   end
 
   describe "GET 'show'" do
@@ -57,42 +73,60 @@ describe QuestionariesController do
       response.should have_selector("span.content", :content => q1.content)
       response.should have_selector("span.content", :content => q2.content)
     end
+
+    it "should show links for authorized visitor" do
+      q1 = Factory(:question, :questionary => @questionary)
+      q2 = Factory(:question, :questionary => @questionary)
+      get :show, {:id => @questionary}, {:authorized => true, :ip => @request.remote_ip}
+      response.should have_selector("a", :href => question_path(q1))
+      response.should have_selector("a", :href => question_path(q2))
+      response.should have_selector("a", :href => "#{new_question_path}?questionary_id=#{@questionary.id}")
+    end
+
+    it "shouldn't show links for unauthorized visitor" do
+      q1 = Factory(:question, :questionary => @questionary)
+      q2 = Factory(:question, :questionary => @questionary)
+      get :show, :id => @questionary
+      response.should_not have_selector("a", :href => question_path(q1))
+      response.should_not have_selector("a", :href => question_path(q2))
+      response.should_not have_selector("a", :href => "#{new_question_path}?questionary_id=#{@questionary.id}")
+    end
   end
-  
+
   describe "GET 'new'" do
-    
+
     it "should be successful" do
       get :new
       response.should be_success
     end
-    
+
     it "should have the right title" do
       get :new
       response.should have_selector("title", :content => "Creating new questionary")
-    end    
+    end
   end
-  
+
   describe "POST 'create'" do
-    
+
     describe "testing failures:" do
-      
+
       before (:each) do
 	@attr = { :name => "", :description => "" }
       end
-      
+
       it "should not create a questionary with empty attr" do
 	lambda do
 	  post :create, :questionary => @attr
 	end.should_not change(Questionary, :count)
       end
-      
+
       it "should stay on 'new' page if creating failed" do
 	lambda do
 	  post :create, :questionary => @attr
 	  response.should render_template(:new)
 	end
       end
-      
+
       it "should show an error explanation if creating failed" do
 	lambda do
 	  post :create, :questionary => @attr
@@ -101,27 +135,27 @@ describe QuestionariesController do
 	end
       end
     end
-    
+
     describe "testing success:" do
-      
+
       before(:each) do
 	@attr = { :name => "TestQuestionary", :description => "Description of test questionary" }
       end
-      
+
       it "should create a valid questionary" do
 	lambda do
 	  post :create, :questionary => @attr
 	end.should change(Questionary, :count).by(1)
       end
-      
+
       # next test may be changed, maybe it should redirect to other page
       it "should redirect to the questionary show page" do
 	lambda do
 	  post :create, :questionary => @attr
 	  response.should redirect_to(questionary_path(assigns(:questionary)))
 	end
-      end	
-    end  
+      end
+    end
   end
 
   describe "questions associations" do

@@ -1,6 +1,6 @@
 <dd>
   <%= answer.num %>) <%= answer.content%>
-  <% unless links_type=="without" %>
+  <% if links_type=="with" && authorized? %>
     <%= link_to 'edit','#', :class => "actions" %>
     <%= link_to 'delete','#', :class => "actions" %>
   <% end %>

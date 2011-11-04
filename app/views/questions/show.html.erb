@@ -8,4 +8,6 @@
                { :answer => answer, :links_type => "with" } %>
   <% end %>
 </dl>
-<%= link_to 'create a new answer','#', :class => 'actions' %>
+<% if authorized? %>
+  <%= link_to 'create a new answer','#', :class => 'actions' %>
+<% end %>
