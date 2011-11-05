@@ -61,7 +61,7 @@ describe AnswersController do
     describe "testing success:" do
 
       before(:each) do
-	@attr = { :num => 1, :content => "Test answer" }
+	@attr = { :num => 1, :content => "Test answer", :verified => true }
       end
 
       it "should create a valid answer" do

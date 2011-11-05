@@ -87,7 +87,7 @@ describe QuestionsController do
     describe "testing success:" do
 
       before(:each) do
-	@attr = { :num => 1, :content => "Test question?" }
+	@attr = { :num => 1, :content => "Test question?", :extra_answer => true, :multians => 1 }
       end
 
       it "should create a valid question" do

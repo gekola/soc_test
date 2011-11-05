@@ -15,6 +15,8 @@ Factory.define :question do |question|
     id = Factory.next :question_id
     qon.num = id
     qon.content = "Question_#{id}"
+    qon.extra_answer = true
+    qon.multians = 1
   end
   question.association :questionary
 end
@@ -24,6 +26,7 @@ Factory.define :answer do |answer|
     id = Factory.next :answer_id
     ans.num = id
     ans.content = "Answer_#{id}"
+    ans.verified = true
   end
   answer.association :question
 end
