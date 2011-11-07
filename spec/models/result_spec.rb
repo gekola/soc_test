@@ -1,31 +1,34 @@
 require 'spec_helper'
 
 describe Result do
-  
+
   before(:each) do
     @questionary = Factory(:questionary)
     @attr = { :information => {1 => 1} }
   end
 
   it "should create a new instance given valid attr" do
-    Result.create!(@attr)
+    @questionary.results.create!(@attr)
   end
-  
+
   describe "questionary associations" do
-    
+
     before(:each) do
-      @result = Result.create(@attr)
+      @result = @questionary.results.create(@attr)
     end
-    
+
     it "should have an questionary attr" do
       @result.should respond_to(:questionary)
     end
-    
-    it "should have the right assocciated questionary"
+
+    it "should have the right assocciated questionary" do
+      @result.questionary_id.should == @questionary.id
+      @result.questionary.should == @questionary
+    end
   end
 
   describe "validations" do
-    
+
     it "should require a information attr" do
       Result.new(@attr.merge(:information => nil)).should_not be_valid
     end
