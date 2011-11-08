@@ -15,4 +15,8 @@ class Answer < ActiveRecord::Base
   def to_format_s
     "#{num}) #{content}"
   end
+
+  def <=> other
+    self.num <=> other.num
+  end
 end

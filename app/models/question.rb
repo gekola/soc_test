@@ -12,8 +12,12 @@ class Question < ActiveRecord::Base
   validates :questionary_id, :presence => true
   validates :extra_answer, :presence => true
   validates :multians, :presence => true
-  
+
   def to_format_s
     "#{num}. #{content}"
+  end
+
+  def <=> other
+    self.num <=> other.num
   end
 end
