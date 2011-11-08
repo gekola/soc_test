@@ -5,17 +5,13 @@
     <tr>
       <td><%= link_to questionary.name, questionary %></td>
       <td><%= questionary.description %></td>
-      <% if authorized? %>
-        <td>
-          <%= link_to 'edit',questionary, :class => "actions" %>
-           <%= link_to 'delete', questionary, :method => :delete, 
+      <td>
+        <%= link_to 'edit',questionary, :class => "actions" %>
+        <%= link_to 'delete', questionary, :method => :delete,
                        :confirm => "Delete questionary #{questionary.name}\nAre you sure?", :class => "actions" %>
-        </td>
-    <% end %>
+      </td>
     </tr>
   <% end %>
 </table>
-<% if authorized? %>
-  <%= link_to 'create a new questionary',{ :action => :new}, :class => "actions" %>
-<% end %>
+<%= link_to 'create a new questionary',{ :action => :new}, :class => "actions" %>
 

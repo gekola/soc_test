@@ -3,16 +3,14 @@
     <td>
       <strong>Name:</strong> <%= @questionary.name %> <br />
       <strong>Discription:</strong> <%= @questionary.description %> <br />
-      <% if authorized? %>
-        <%= link_to 'edit',edit_questionary_path, :class => "actions" %>
-        <%= link_to 'delete', @questionary, :method => :delete, 
+      <%= link_to 'edit',edit_questionary_path, :class => "actions" %>
+      <%= link_to 'delete', @questionary, :method => :delete,
                     :confirm => "Delete questionary #{@questionary.name}\nAre you sure?", :class => "actions" %>
-      <% end %>
     </td>
     <td>
       <dl>
         <dd>
-          <% @questionary.questions.each do |question| %>
+          <% @questionary.questions.sort.each do |question| %>
             <%= render :partial => 'questions/question_header', :locals =>
                        { :question => question } %>
             <%= render :partial => 'questions/question_links', :locals =>
@@ -26,12 +24,8 @@
           <% end %>
         </dd>
       </dl>
-      <% if authorized? %>
-        <%= link_to 'create a new question', new_question_path(:questionary_id => @questionary), :class => 'actions' %>
-      <% end %>
+      <%= link_to 'create a new question', new_question_path(:questionary_id => @questionary), :class => 'actions' %>
     </td>
   </tr>
 </table>
-<% if authorized? %>
-  <%= link_to 'back to questionaries index', questionaries_path, :class => 'actions' %>
-<% end %>
+<%= link_to 'back to questionaries index', questionaries_path, :class => 'actions' %>

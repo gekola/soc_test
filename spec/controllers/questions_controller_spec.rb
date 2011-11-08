@@ -25,7 +25,7 @@ describe QuestionsController do
       assigns(:question).should == @question
     end
 
-    it "should show the rigth answers" do
+    it "should show the right answers" do
       a1 = Factory(:answer, :question => @question)
       a2 = Factory(:answer, :question => @question)
       get :show, :id => @question

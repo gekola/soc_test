@@ -41,12 +41,9 @@ describe QuestionariesController do
       response.should have_selector("a", :href => new_questionary_path)
     end
 
-    it "shouldn't show links for unauthorized visitor" do
+    it "shouldn't be success for unauthorized visitor" do
       get :index, nil, :authorized => false
-      @questionaries.each do |questionary|
-        response.should_not have_selector("a", :href => questionary_path(questionary), :content => "edit")
-      end
-      response.should_not have_selector("a", :href => new_questionary_path)
+      response.should_not be_success
     end
   end
 
@@ -88,13 +85,11 @@ describe QuestionariesController do
       response.should have_selector("a", :href => "#{new_question_path}?questionary_id=#{@questionary.id}")
     end
 
-    it "shouldn't show links for unauthorized visitor" do
+    it "shouldn't be success for unauthorized visitor" do
       q1 = Factory(:question, :questionary => @questionary)
       q2 = Factory(:question, :questionary => @questionary)
       get :show, {:id => @questionary}, {:authorized => false}
-      response.should_not have_selector("a", :href => question_path(q1))
-      response.should_not have_selector("a", :href => question_path(q2))
-      response.should_not have_selector("a", :href => "#{new_question_path}?questionary_id=#{@questionary.id}")
+      response.should_not be_success
     end
   end
 
