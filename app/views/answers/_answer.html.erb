@@ -1,6 +1,6 @@
 <dd>
-  <%= answer.num %>) <%= answer.content%>
-  <% if links_type=="with" && authorized? %>
+  <%= answer.num %>) <%= answer.content%> (Verified - <%= answer.verified %>)
+  <% if links_type=="with" %>
     <%= link_to 'edit',edit_answer_path(answer), :class => "actions" %>
     <%= link_to 'delete', answer, :method => :delete, 
                 :confirm => "Delete answer #{answer.num}) #{answer.content}\nAre you sure?", :class => "actions" %>

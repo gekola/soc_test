@@ -10,7 +10,7 @@ class Question < ActiveRecord::Base
   validates :num, :presence => true
   validates :content, :presence => true, :length => { :maximum => 140 }
   validates :questionary_id, :presence => true
-  validates :extra_answer, :presence => true
+  validates :extra_answer, :inclusion => {:in => [true, false]}
   validates :multians, :presence => true
 
   def to_format_s

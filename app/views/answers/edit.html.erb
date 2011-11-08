@@ -10,6 +10,10 @@
     <%= form.text_field :content %>
   </div>
   <div class="field">
+    <%= form.label :verified %>
+    <%= form.check_box :verified, {:value => 1, :disabled => true} %>
+  </div>
+  <div class="field">
     <%= form.label :question %>
     <% @question = @answer.question %>
     <%= collection_select :question, :id ,Question.where(:questionary_id => @question.questionary), :id, :to_format_s %>

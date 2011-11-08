@@ -3,7 +3,7 @@
 <%= render :partial => 'question_links', :locals =>
            { :question => @question, :links_type => "edit&delete" } %>
 <dl>
-  <% @question.answers.each do |answer| %>
+  <% @question.answers.sort.each do |answer| %>
     <%= render :partial => 'answers/answer', :locals =>
                { :answer => answer, :links_type => "with" } %>
   <% end %>

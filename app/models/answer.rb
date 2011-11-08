@@ -9,8 +9,8 @@ class Answer < ActiveRecord::Base
   validates :num, :presence => true
   validates :content, :presence => true, :length => { :maximum => 140 }
   validates :question_id, :presence => true
-  validates :verified, :presence => true
-  validates :result_id, :presence => { :if => Proc.new{ |ans| !ans.verified } }
+  validates :verified, :inclusion => {:in => [true, false]}
+ # validates :result_id, :presence => { :if => Proc.new{ |ans| !ans.verified } }
 
   def to_format_s
     "#{num}) #{content}"

@@ -7,7 +7,12 @@ class AnswersController < ApplicationController
     @title = "Creating new answer"
   end
 
-  def create
+  def create 
+    if params[:verified]==nil
+      params[:answer][:verified] = true
+    else
+      params[:answer].merge(:verified => params[:verified])
+    end
     @question = Question.find_by_id(params[:question][:id])
     @answer = @question.answers.build(params[:answer])
     if @answer.save

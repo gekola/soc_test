@@ -38,10 +38,6 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    #@question = Question.find(params[:id])
-    #redir_url = url_for(@question.questionary)
-    #@question.destroy
-    #redirect_to redir_url
     @question = Question.find(params[:id])
     @question.destroy
     redirect_to @question.questionary

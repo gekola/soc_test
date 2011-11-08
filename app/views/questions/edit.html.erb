@@ -10,6 +10,14 @@
     <%= form.text_field :content %>
   </div>
   <div class="field">
+    <%= form.label :extra_answer %>
+    <%= form.check_box :extra_answer %>
+  </div>
+  <div class="field">
+    <%= form.label :multians %> 
+    <%= form.number_field :multians %>
+  </div>
+  <div class="field">
     <%= form.label :questionary %>
     <%= collection_select :questionary, :id ,Questionary.all, :id, :name %>
   </div>
