@@ -1,2 +1,8 @@
-<h1>Pages#form</h1>
-<p>Find me in app/views/pages/form.html.erb</p>
+<%= form_for(@result) do |f| %>
+  <table>
+    <% @questionary.questions.each do |question| %>
+      <%= render :partial => 'question', :locals => { :question => question, :f => f } %>
+    <% end %>
+  </table>
+  <%= f.submit %>
+<% end %>

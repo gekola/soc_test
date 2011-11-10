@@ -1,0 +1,9 @@
+<li>
+  <% if question.multians == 1 %>
+    <%= radio_button_tag("answers[#{question.id}]", "#{answer.id}") %>
+    <%= label_tag("answers[#{question.id}]_#{answer.id}", answer.content) %>
+  <% else %>
+    <%= check_box_tag("answers[#{answer.id}_checked]") %>
+    <%= label_tag("answers[#{answer.id}_checked]", answer.content) %>
+  <% end %>
+</li>

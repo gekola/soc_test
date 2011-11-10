@@ -1,0 +1,17 @@
+<tr>
+  <td>
+    <%= question.content %>
+  </td>
+  <td>
+    <ol>
+      <% question.answers.each do |answer| %>
+        <%= render :partial => 'answer', :locals => { :question => question,
+                                                      :answer => answer, :f => f } %>
+      <% end %>
+
+      <% if question.extra_answer %>
+        <%= render :partial => 'extra_answer', :locals => { :question => question, :f => f } %>
+      <% end %>
+    </ol>
+  </td>
+</tr>

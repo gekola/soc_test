@@ -3,5 +3,5 @@
 <% else %>
   <%= link_to 'edit',edit_question_path, :class => "actions" %>
 <% end %>
- <%= link_to 'delete', question, :method => :delete, 
+ <%= link_to 'delete', question, :method => :delete,
              :confirm => "Delete question #{question.num}. #{question.content}\nAre you sure?", :class => "actions" %>

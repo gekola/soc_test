@@ -4,5 +4,7 @@ class PagesController < ApplicationController
   end
 
   def form
+    @questionary = Questionary.first
+    @result = Result.new
   end
 end
