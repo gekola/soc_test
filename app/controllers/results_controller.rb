@@ -10,7 +10,7 @@ class ResultsController < ApplicationController
     redirect_to form_path
   end
   
-  def create
+  def create 
     #temporary solution, need to discuss later
     default_questionary_id = 1
     begin
@@ -26,16 +26,21 @@ class ResultsController < ApplicationController
 	  question = Question.find_by_id(key.split('_')[0])
 	  if question.extra_answer
 	    unless value.blank? || answers[question.id.to_s]!='new'
-	      num = question.answers.max.num+1
-	      attr = {:num => num, :content => value, :verified => false}
-	      createAns = Answer.new(attr)
-	      createAns.question = question
-	      createAns.result = @result
-	      if createAns.save
-		createAns.id
+	      existAns = Answer.find {|a| a.content==value && a.question_id==question.id }
+	      if existAns.nil?
+		num = question.answers.max.num+1
+		attr = {:num => num, :content => value, :verified => false}
+		createAns = Answer.new(attr)
+		createAns.question = question
+		createAns.result = @result
+		if createAns.save
+		  createAns.id
+		else
+		  validRes = false
+		  nil
+		end
 	      else
-		validRes = false
-		nil
+		existAns.id
 	      end
 	    end
 	  else
