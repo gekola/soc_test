@@ -1,0 +1,11 @@
+<h1>All results</h1>
+
+<table>
+  <% @results.each do |result| %>
+    <tr>
+      <td><%= result.id %></td>
+      <td><%= result.answers.inspect %></td>
+    </tr>
+  <% end %>
+</table>
+

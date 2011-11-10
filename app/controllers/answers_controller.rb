@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   end
 
   def create 
-    if params[:verified]==nil
+    if params[:verified].nil?
       params[:answer][:verified] = true
     else
       params[:answer].merge(:verified => params[:verified])
@@ -24,6 +24,7 @@ class AnswersController < ApplicationController
 
   def edit
     @answer = Answer.find(params[:id])
+    @answer.verified = true
     @title = "Edit answer"
   end
 

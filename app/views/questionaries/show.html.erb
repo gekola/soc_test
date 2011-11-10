@@ -16,7 +16,7 @@
             <%= render :partial => 'questions/question_links', :locals =>
                        { :question => question, :links_type => "show&delete" } %>
             <dl>
-              <% question.answers.each do |answer| %>
+              <% question.answers.sort.each do |answer| %>
                 <%= render :partial => 'answers/answer', :locals =>
                            { :answer => answer, :links_type => "without" } %>
               <% end %>

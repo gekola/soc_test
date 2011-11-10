@@ -5,6 +5,7 @@ SocTest::Application.routes.draw do
   resources :questionaries
   resources :questions
   resources :answers, :only => [:new, :create, :destroy, :edit, :update]
+  resources :results, :only => [:new, :create, :index]
   resources :sessions, :only => [:new, :create, :destroy]
   resources :results, :only => [:create]
 

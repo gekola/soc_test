@@ -5,8 +5,10 @@
   <td>
     <ol>
       <% question.answers.each do |answer| %>
-        <%= render :partial => 'answer', :locals => { :question => question,
-                                                      :answer => answer, :f => f } %>
+        <% if answer.verified %>
+          <%= render :partial => 'answer', :locals => { :question => question,
+                                                        :answer => answer, :f => f } %>
+        <% end %>
       <% end %>
 
       <% if question.extra_answer %>
