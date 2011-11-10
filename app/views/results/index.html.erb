@@ -1,10 +1,22 @@
+<% require 'answer.rb' %>
+
 <h1>All results</h1>
 
 <table>
   <% @results.each do |result| %>
     <tr>
       <td><%= result.id %></td>
-      <td><%= result.answers.inspect %></td>
+      <% information = YAML::load(result.information) %>
+      <% information.each do |inf| %>
+        <tr>
+          <td>id: <%= inf.id %></td>
+          <td>num: <%= inf.num %></td>
+          <td>cont: <%= inf.content %></td>
+          <td>q_id: <%= inf.question_id %></td>
+          <td>ver?: <%= inf.verified %></td>
+          <td>res_id: <%= inf.result_id %></td>
+        </tr>
+      <% end %>
     </tr>
   <% end %>
 </table>

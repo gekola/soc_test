@@ -60,7 +60,7 @@ class ResultsController < ApplicationController
       if answers.map { |ans| ans.question_id }.sort.uniq != @questionary.questions.map { |q| q.id }.sort
 	validRes = false
       else
-	@result.answers = answers
+	@result.update_attributes(:information => answers)
       end
     rescue
       validRes = false
