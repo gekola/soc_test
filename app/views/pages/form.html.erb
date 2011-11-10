@@ -1,6 +1,6 @@
 <%= form_for(@result) do |f| %>
   <table>
-    <% @questionary.questions.each do |question| %>
+    <% @questionary.questions.sort.each do |question| %>
       <%= render :partial => 'question', :locals => { :question => question, :f => f } %>
     <% end %>
   </table>
