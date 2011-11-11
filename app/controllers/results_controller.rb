@@ -23,30 +23,20 @@ class ResultsController < ApplicationController
 	when /\d+_checked/
 	  key.split('_')[0].to_i
 	when /\d+_extra/
-	  question = Question.find_by_id(key.split('_')[0])
-	  if question.extra_answer
-	    unless value.blank? || answers[question.id.to_s]!='new'
-	      existAns = Answer.find {|a| a.content==value && a.question_id==question.id }
-	      if existAns.nil?
-		num = question.answers.max.num+1
-		attr = {:num => num, :content => value, :verified => false}
-		createAns = Answer.new(attr)
-		createAns.question = question
-		createAns.result = @result
-		if createAns.save
-		  createAns.id
-		else
-		  validRes = false
-		  nil
-		end
-	      else
-		existAns.id
-	      end
-	    end
+	  question = Question.find_by_id(key.split('_')[0].to_i)
+	  if question.multians >1
+	    ans_id = createNewAns(question,value) if answers["#{question.id}_new_checked"]=="1"
+	  else
+	    ans_id = createNewAns(question,value) if answers[question.id.to_s]=='new'
+	  end
+	  if ans_id!=0
+	    ans_id
 	  else
 	    validRes = false
 	    nil
 	  end
+	when /\d+_new_checked/
+	  nil
 	when /\d+/
 	  value.to_i if value!='new'
 	else
@@ -57,7 +47,6 @@ class ResultsController < ApplicationController
     rescue
       validRes = false
     end
-    
     
     begin
       answers.compact!
@@ -79,4 +68,29 @@ class ResultsController < ApplicationController
       redirect_to form_path
     end      
   end
+  
+  private
+  def createNewAns(question, value)
+    if question.extra_answer
+      unless value.blank?
+	existAns = Answer.find {|a| a.content==value && a.question_id==question.id }
+	if existAns.nil?
+	  num = question.answers.max.num+1
+	  attr = {:num => num, :content => value, :verified => false}
+	  createAns = Answer.new(attr)
+	  createAns.question = question
+	  createAns.result = @result
+	  if createAns.save
+	    return createAns.id
+	  else
+	    return 0
+	  end
+        else
+	  return existAns.id
+	end
+    end
+    else
+      return 0
+    end
+  end  
 end

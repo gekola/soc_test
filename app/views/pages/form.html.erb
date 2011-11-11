@@ -1,4 +1,5 @@
 <%= form_for(@result) do |f| %>
+  <%= render 'shared/object_error_messages', :object => f.object %>
   <table>
     <% @questionary.questions.sort.each do |question| %>
       <%= render :partial => 'question', :locals => { :question => question, :f => f } %>

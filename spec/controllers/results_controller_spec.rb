@@ -50,7 +50,8 @@ describe ResultsController do
 	@ans5 = Factory(:answer, :question => @que3)
 	@ans6 = Factory(:answer, :question => @que3)
 	@attr = {:answers => {"#{@que1.id}" => "#{@ans2.id}", "#{@ans3.id}_checked" => "1",
-	                      "#{@ans4.id}_checked" => "1", "#{@que3.id}" => "new", "#{@que3.id}_extra" => "testextra"}}
+	                      "#{@ans4.id}_checked" => "1", "#{@que2.id}_new_checked" => "1", "#{@que2.id}_extra" => "testextra2",
+	                      "#{@que3.id}" => "new", "#{@que3.id}_extra" => "testextra3"}}
       end
     
       it "should redirect to a root path" do
