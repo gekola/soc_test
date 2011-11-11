@@ -1,9 +1,9 @@
-<div class="field">
+<li>
   <% if question.multians == 1 %>
     <%= radio_button_tag("answers[#{question.id}]", "new") %>
   <% else %>
-    <%= check_box_tag("answers[new_checked]") %>
+    <%= check_box_tag("answers[#{question.id}_new_checked]") %>
   <% end %>
   <%= label_tag("answers[#{question.id}_extra]", "Other:") %>
   <%= text_field_tag("answers[#{question.id}_extra]") %>
-</div>
+</li>

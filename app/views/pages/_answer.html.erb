@@ -1,4 +1,4 @@
-<div class="field">
+<li>
   <% if question.multians == 1 %>
     <%= radio_button_tag("answers[#{question.id}]", "#{answer.id}") %>
     <%= label_tag("answers[#{question.id}]_#{answer.id}", "#{answer.num}.") %>
@@ -8,5 +8,4 @@
     <%= label_tag("answers[#{question.id}]_#{answer.id}", "#{answer.num}.") %>
     <%= label_tag("answers[#{answer.id}_checked]", answer.content) %>
   <% end %>
-</div>
-
+</li>
