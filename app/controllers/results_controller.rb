@@ -12,7 +12,7 @@ class ResultsController < ApplicationController
   
   def create 
     #temporary solution, need to discuss later
-    default_questionary_id = 1
+    default_questionary_id = Questionary.first
     begin
       @questionary = Questionary.find_by_id(default_questionary_id)
       @result = @questionary.results.build()

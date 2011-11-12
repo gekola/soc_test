@@ -4,7 +4,13 @@ describe Result do
 
   before(:each) do
     @questionary = Factory(:questionary)
-    @attr = { :information => {1 => 1} }
+    @question = Factory(:question, :questionary => @questionary)
+    @question.num = 1
+    @question.save
+    @answer = Factory(:answer, :question => @question)
+    @answer.num = 1
+    @answer.save
+    @attr = { :information => {1 => [1]} }
   end
 
   it "should create a new instance given valid attr" do
@@ -26,15 +32,19 @@ describe Result do
       @result.questionary.should == @questionary
     end
   end
-
+  
   describe "validations" do
-
+    
     it "should require a information attr" do
-      Result.new(@attr.merge(:information => nil)).should_not be_valid
+      @questionary.results.new(@attr.merge(:information => nil)).should_not be_valid
+    end
+    
+    it "should require a questionary id" do
+      Result.new(@attr).should_not be_valid
     end
 
-    it "should require a questionary id" do
-      Result.new(@attr.merge(:questionary_id => nil)).should_not be_valid
+    it "should require a valid information attr" do
+      @questionary.results.new(@attr.merge(:information => {1=>[2]})).should_not be_valid
     end
   end
 end
