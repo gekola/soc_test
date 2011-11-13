@@ -1,18 +1,16 @@
 class ResultInformationValidator < ActiveModel::Validator
   def validate(record)
-    record.information.each do |q_id,value|
-      question = record.questionary.questions.where("num=#{q_id}")[0]
-      if question.nil?
-        record.errors[:information] << "Question number #{q_id} does not seem to exist"
-      else 
-        value.each do |a_id|
-          unless question.answers.where("num=#{a_id}").size.equal? 1
-            record.errors[:information] << "Question #{q_id} has no answer number #{a_id}"
-          else
-            ans = question.answers.where("num=#{a_id}").first 
-            record.errors[:information] << "A new answer #{a_id} (question #{q_id}) does not belong to the result" unless ans.verified? | ans.result.equal?(record)
-          end
-        end
+    record.information.each do |a_id|
+      answer = Answer.find_by_id(a_id)
+      if answer.nil?
+        record.errors[:information] << "Answer ##{a_id} does not seem to exist"
+      else
+        record.errors[:information] << "Question ##{answer.question_id} does not " +
+                                        "belongs to the same questionary as the result" if
+          answer.question.questionary_id != record.questionary_id
+        record.errors[:information] << "A new answer ##{a_id} (question ##{answer.question_id}) " +
+                                        "does not belongs to the result" if
+          !answer.verified? && answer.result_id != record.id
       end
     end
   end
@@ -20,7 +18,8 @@ end
 
 class Result < ActiveRecord::Base
   attr_accessible :information
-  
+  serialize :information, Array
+
   has_many :answers
   belongs_to :questionary
   after_destroy :cleanup

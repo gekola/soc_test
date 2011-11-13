@@ -1,24 +1,24 @@
 class ResultsController < ApplicationController
   before_filter :authorize, :only => :index
-  
+
   def index
     @title = "All results"
     @results = Result.all
   end
-  
+
   def new
     redirect_to form_path
   end
-  
-  def create 
+
+  def create
     #temporary solution, need to discuss later
     default_questionary_id = Questionary.first
     begin
       @questionary = Questionary.find_by_id(default_questionary_id)
       @result = @questionary.results.build()
-      validRes = @result.save
+      validRes = @result.save(:validate => false)
       answers = params[:answers]
-      answers = answers.map do |key,value|  
+      answers = answers.map do |key,value|
 	case key
 	when /\d+_checked/
 	  key.split('_')[0].to_i
@@ -47,28 +47,28 @@ class ResultsController < ApplicationController
     rescue
       validRes = false
     end
-    
+
     begin
       answers.compact!
-      answers.map! { |ans| Answer.find_by_id(ans) }
-      if answers.map { |ans| ans.question_id }.sort.uniq != @questionary.questions.map { |q| q.id }.sort
+      if answers.map { |ans| Answer.find_by_id(ans).question_id }.sort.uniq !=
+          @questionary.questions.map { |q| q.id }.sort
 	validRes = false
       else
-	@result.update_attributes(:information => answers)
+	validRes = @result.update_attributes(:information => answers)
       end
     rescue
       validRes = false
     end
-    
+
     if validRes
       #it should redirect to a thx page, but we don't have it yet
       redirect_to root_path
     else
       @result.destroy if !@result.nil? && !@result.id.nil?
       redirect_to form_path
-    end      
+    end
   end
-  
+
   private
   def createNewAns(question, value)
     if question.extra_answer
@@ -92,5 +92,5 @@ class ResultsController < ApplicationController
     else
       return 0
     end
-  end  
+  end
 end

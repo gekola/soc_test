@@ -6,15 +6,16 @@
   <% @results.each do |result| %>
     <tr>
       <td><%= result.id %></td>
-      <% information = YAML::load(result.information) %>
+      <% information = result.information %>
       <% information.each do |inf| %>
+        <% ans = Answer.find_by_id(inf) %>
         <tr>
-          <td>id: <%= inf.id %></td>
-          <td>num: <%= inf.num %></td>
-          <td>cont: <%= inf.content %></td>
-          <td>q_id: <%= inf.question_id %></td>
-          <td>ver?: <%= inf.verified %></td>
-          <td>res_id: <%= inf.result_id %></td>
+          <td>id: <%= ans.id %></td>
+          <td>num: <%= ans.num %></td>
+          <td>cont: <%= ans.content %></td>
+          <td>q_id: <%= ans.question_id %></td>
+          <td>ver?: <%= ans.verified %></td>
+          <td>res_id: <%= ans.result_id %></td>
         </tr>
       <% end %>
     </tr>
