@@ -1,4 +1,10 @@
 en:
   layouts:
     application:
-      title: "Survey Research"
+      title: Survey Research
+    header:
+      home: Home
+  pages:
+    home:
+      header: Survey Research
+      participate_button: Participate

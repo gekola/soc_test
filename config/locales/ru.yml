@@ -2,3 +2,9 @@ ru:
   layouts:
     application:
       title: Опрос
+    header:
+      home: Главная
+  pages:
+    home:
+      header: Социологический опрос
+      participate_button: Участвовать
