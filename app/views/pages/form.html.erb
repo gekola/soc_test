@@ -5,5 +5,5 @@
       <%= render :partial => 'question', :locals => { :question => question, :f => f } %>
     <% end %>
   </table>
-  <%= f.submit %>
+  <%= f.submit (t ".submit"), :class => "round" %>
 <% end %>

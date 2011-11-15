@@ -7,4 +7,7 @@ class PagesController < ApplicationController
     @questionary = Questionary.first
     @result = Result.new
   end
+
+  def thanks
+  end
 end

@@ -8,3 +8,7 @@ ru:
     home:
       header: Социологический опрос
       participate_button: Участвовать
+    extra_answer:
+      other: Свой вариант
+    form:
+      submit: Отправить анкету

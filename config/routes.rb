@@ -11,6 +11,7 @@ SocTest::Application.routes.draw do
 
   root :to => 'pages#home'
   match '/form', :to => 'pages#form'
+  match '/thanks', :to => 'pages#thanks'
 
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'

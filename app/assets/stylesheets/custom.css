@@ -44,6 +44,13 @@ section h1 {
   font-size: 200%;
 }
 
+#thanks {
+  font-size: 150%;
+  text-align: center;
+  color: red;
+  margin: 0
+}
+
 section p {
   text-align: justify;
   margin-top: 0.5em;
@@ -99,4 +106,8 @@ nav ul li a:visited {
 
 nav ul li a:hover {
   text-decoration: underline;
+}
+
+form ul li {
+  list-style-type: none;
 }

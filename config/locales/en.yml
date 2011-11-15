@@ -8,3 +8,7 @@ en:
     home:
       header: Survey Research
       participate_button: Participate
+    extra_answer:
+      other: Other variant
+    form:
+      submit: Send form
