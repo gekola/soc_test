@@ -50,6 +50,16 @@ describe Result do
       @questionary.results.new(:information => [answer2.id]).should_not be_valid
     end
 
+    it "should require all questionss to be answered" do
+      question2 = Factory(:question, :questionary => @questionary)
+
+    end
+
+    it "should require number of answers for a one question not to exceed it's multians value" do
+      answer2 = Factory(:answer, :question => @question)
+      @questionary.results.new(:information => [@answer.id, answer2.id]).should_not be_valid
+    end
+
     it "shoult require a valid new answer" do
       result = @questionary.results.create!(@attr)
       result2 = @questionary.results.create!(@attr)

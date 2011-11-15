@@ -14,12 +14,12 @@ class ResultsController < ApplicationController
 
   def create
     if !session[:can_post]
-      cookies[:retrying_count] = { :value => (cookies[:retrying_count].to_i || 0)+1, 
+      cookies[:retrying_count] = { :value => (cookies[:retrying_count].to_i || 0)+1,
                                    :expires => 10.years.from_now.utc }
       redirect_to thanks_path
     else
-      #temporary solution, need to discuss later
-      default_questionary_id = Questionary.first       
+      #temporary solution, need to be discussed later
+      default_questionary_id = Questionary.first
       begin
         @questionary = Questionary.find_by_id(default_questionary_id)
         @result = @questionary.results.build()
@@ -54,19 +54,14 @@ class ResultsController < ApplicationController
       rescue
         validRes = false
       end
-       
+
       begin
         answers.compact!
-        if answers.map { |ans| Answer.find_by_id(ans).question_id }.sort.uniq !=
-            @questionary.questions.map { |q| q.id }.sort
-	  validRes = false
-        else
-	  validRes = @result.update_attributes(:information => answers)
-        end
+        validRes = @result.update_attributes(:information => answers)
       rescue
         validRes = false
       end
-    
+
       if validRes
 	cookies[:successfully_posted] = { :value => true,
 	                                  :expires => 10.years.from_now.utc }
@@ -97,11 +92,11 @@ class ResultsController < ApplicationController
         answers.each do |key,value|
 	  @answers.send("#{key}=",value)
         end
-        flash.now[:error] = "Something went wrong. We can't parse you answers. 
-Please make sure, that you fill in everything correctly."
+        flash.now[:error] = "Something went wrong. We can't parse you answers.
+Please make sure, that you fill in everything correctly." # filled the form/questionary?
         render :new
       end
-    end  
+    end
   end
 
   private
