@@ -1,0 +1,12 @@
+<li>
+  <% if question.multians == 1 %>
+    <% checked =  @answers.fieldEqual?("_#{question.id}",'new') if !@answers.nil? %>
+    <%= radio_button_tag("answers[_#{question.id}]", "new", checked) %>
+  <% else %>
+    <% checked =  @answers.fieldEqual?("_#{question.id}_new_checked",'1') if !@answers.nil? %>
+    <%= check_box_tag("answers[_#{question.id}_new_checked]", '1', checked) %>
+  <% end %>
+  <%= label_tag("answers[#{question.id}_extra]", "#{t ".other"}:") %>
+  <% text =  @answers.send("_#{question.id}_extra") if !@answers.nil? && @answers.respond_to?("_#{question.id}_extra") %>
+  <%= text_field_tag("answers[_#{question.id}_extra]", text) %>
+</li>

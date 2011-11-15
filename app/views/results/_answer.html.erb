@@ -1,10 +1,12 @@
 <li>
   <% if question.multians == 1 %>
-    <%= radio_button_tag("answers[#{question.id}]", "#{answer.id}") %>
+    <% checked =  @answers.fieldEqual?("_#{question.id}","#{answer.id}") if !@answers.nil? %>
+    <%= radio_button_tag("answers[_#{question.id}]", "#{answer.id}", checked) %>
     <%= label_tag("answers[#{question.id}]_#{answer.id}", "#{answer.num}.") %>
     <%= label_tag("answers[#{question.id}]_#{answer.id}", answer.content) %>
   <% else %>
-    <%= check_box_tag("answers[#{answer.id}_checked]") %>
+    <% checked =  @answers.fieldEqual?("_#{answer.id}_checked",'1') if !@answers.nil? %>
+    <%= check_box_tag("answers[_#{answer.id}_checked]", '1', checked) %>
     <%= label_tag("answers[#{question.id}]_#{answer.id}", "#{answer.num}.") %>
     <%= label_tag("answers[#{answer.id}_checked]", answer.content) %>
   <% end %>

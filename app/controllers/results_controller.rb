@@ -7,12 +7,14 @@ class ResultsController < ApplicationController
   end
 
   def new
-    redirect_to form_path
+    @questionary = Questionary.first
+    @result = Result.new
+    @title = "Form"
   end
 
   def create
     #temporary solution, need to discuss later
-    default_questionary_id = Questionary.first
+    default_questionary_id = Questionary.first       
     begin
       @questionary = Questionary.find_by_id(default_questionary_id)
       @result = @questionary.results.build()
@@ -20,14 +22,14 @@ class ResultsController < ApplicationController
       answers = params[:answers]
       answers = answers.map do |key,value|
 	case key
-	when /\d+_checked/
-	  key.split('_')[0].to_i
-	when /\d+_extra/
-	  question = Question.find_by_id(key.split('_')[0].to_i)
+	when /_\d+_checked/
+	  key.split('_')[1].to_i
+	when /_\d+_extra/
+	  question = Question.find_by_id(key.split('_')[1].to_i)
 	  if question.multians >1
-	    ans_id = createNewAns(question,value) if answers["#{question.id}_new_checked"]=="1"
+	    ans_id = createNewAns(question,value) if answers["_#{question.id}_new_checked"]=="1"
 	  else
-	    ans_id = createNewAns(question,value) if answers[question.id.to_s]=='new'
+	    ans_id = createNewAns(question,value) if answers["_"+question.id.to_s]=='new'
 	  end
 	  if ans_id!=0
 	    ans_id
@@ -35,10 +37,10 @@ class ResultsController < ApplicationController
 	    validRes = false
 	    nil
 	  end
-	when /\d+_new_checked/
+	when /_\d+_new_checked/
 	  nil
-	when /\d+/
-	  value.to_i if value!='new'
+	when /_\d+/
+	  value.to_i if value!='new' && Answer.find_by_id(value.to_i).question_id==key.split('_')[1].to_i
 	else
 	  validRes = false
 	  nil
@@ -47,7 +49,7 @@ class ResultsController < ApplicationController
     rescue
       validRes = false
     end
-
+       
     begin
       answers.compact!
       if answers.map { |ans| Answer.find_by_id(ans).question_id }.sort.uniq !=
@@ -59,13 +61,38 @@ class ResultsController < ApplicationController
     rescue
       validRes = false
     end
-
+    
     if validRes
-      #it should redirect to a thx page, but we don't have it yet
-      redirect_to root_path
+      redirect_to thanks_path
     else
       @result.destroy if !@result.nil? && !@result.id.nil?
-      redirect_to form_path
+      @result = @questionary.results.build
+      @result.information = answers
+      @result.valid?
+      #generating an object for auto fill-in fields after re-render
+      @answers = Object.new
+      answers = params[:answers]
+      answers.each do |key,value|
+	@answers.instance_eval "def #{key}= (val)
+	                          instance_variable_set(\'@#{key}\', val)
+                                end"
+	@answers.instance_eval "def #{key}
+	                          instance_variable_get(\'@#{key}\')
+                                end"
+      end
+      @answers.instance_eval "def fieldEqual?(field, value)
+                                if respond_to?(\"\#\{field}\")
+                                  send(\"\#\{field}\")==value
+                                else
+                                  false
+                                end
+                              end"
+      answers.each do |key,value|
+	@answers.send("#{key}=",value)
+      end
+      flash[:failure] = "Something went wrong. We can't parse you answers. 
+Please make sure, that you fill in everything correctly."
+      render :new
     end
   end
 
