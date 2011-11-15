@@ -7,8 +7,7 @@ class SessionsController < ApplicationController
   def create
     reset_session
     if authenticate(params[:session][:password])
-      session[:authorized] = true
-      session[:ip] = request.remote_ip
+      setSessionParams(:authorized => true, :can_post => true)
       redirect_to :questionaries
     else
       flash.now[:error] = "Invalid password."
