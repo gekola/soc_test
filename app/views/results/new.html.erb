@@ -5,5 +5,7 @@
       <%= render :partial => 'question', :locals => { :question => question, :f => f } %>
     <% end %>
   </table>
-  <%= f.submit (t ".submit"), :class => "round" %>
+  <div class="submit_block">
+    <%= f.submit (t ".submit"), :id => "submit", :class => "round" %>
+  </div>
 <% end %>

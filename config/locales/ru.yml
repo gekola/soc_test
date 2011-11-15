@@ -13,3 +13,5 @@ ru:
       other: Свой вариант
     new:
       submit: Отправить анкету
+    question:
+      hint: Максимум вариантов ответа — %{count}

@@ -13,3 +13,5 @@ en:
       other: Other variant
     new:
       submit: Send form
+    question:
+      hint: No more than %{count} answers

@@ -111,3 +111,22 @@ nav ul li a:hover {
 form ul li {
   list-style-type: none;
 }
+
+.submit_block {
+  margin-top: 60px;
+  text-align: center;
+}
+
+#submit {
+  height: 40px;
+}
+
+span.question {
+  font-size: 120%;
+  font-weight: bold;
+}
+
+span.hint {
+  font-size: 90%;
+  color: blue;
+}
