@@ -1,4 +1,4 @@
-<%= form_for(@result) do |f| %>
+<%= form_for(@result, :url => '/form') do |f| %>
   <%= render 'shared/object_error_messages', :object => f.object %>
   <table>
     <% @questionary.questions.sort.each do |question| %>
