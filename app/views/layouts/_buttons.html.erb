@@ -1,0 +1,32 @@
+<% if part == :header %>
+
+  <!-- Yandex Share --!>
+  <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+
+<% else %>
+
+  <!-- Yandex Share --!>
+  <span id="ya_share"></span>
+
+  <script type="text/javascript">
+    new Ya.share({
+      element: 'ya_share',
+        elementStyle: {
+          'type': 'icon',
+          'quickServices': ['vkontakte', 'facebook', 'twitter']
+        },
+        link: 'http://socio.heroku.com/',
+        title: 'Опрос — «Роль кинематографа в жизни современного человека»',
+        description: 'Социологический опрос от студентов БГУИР. Поможем ребятам получить автомат =)',
+        popupStyle: {
+          copyPasteField: true
+        },
+        serviceSpecific: {
+          twitter: {
+            title: 'Поучаствуй вместе со мной в опросе от студентов БГУИР: «Роль кинематографа в жизни современного человека»'
+          }
+        }
+    });
+  </script>
+
+<% end %>
