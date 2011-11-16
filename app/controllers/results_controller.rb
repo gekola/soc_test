@@ -7,15 +7,18 @@ class ResultsController < ApplicationController
   end
 
   def new
+    unless session[:can_see_form]
+      redirect_to root_path;
+    else
+      session[:can_see_form] = false
+    end
     @questionary = Questionary.first
     @result = Result.new
     @title = "Form"
   end
 
   def create
-    if !session[:can_post]
-      cookies[:retrying_count] = { :value => (cookies[:retrying_count].to_i || 0)+1,
-                                   :expires => 10.years.from_now.utc }
+    unless session[:can_post]
       redirect_to thanks_path
     else
       #temporary solution, need to be discussed later
@@ -65,6 +68,7 @@ class ResultsController < ApplicationController
       if validRes
 	cookies[:successfully_posted] = { :value => true,
 	                                  :expires => 10.years.from_now.utc }
+        reset_session
         redirect_to thanks_path
       else
         @result.destroy if !@result.nil? && !@result.id.nil?

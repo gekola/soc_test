@@ -9,7 +9,7 @@ class PagesController < ApplicationController
     else
       can = false
     end
-    setSessionParams(:authorized => false, :can_post => can)
+    setSessionParams(:authorized => false, :can_post => can, :can_see_form => true)
   end
 
   def thanks
