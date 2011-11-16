@@ -13,4 +13,3 @@ doc/
 .project
 .DS_Store
 .autotest
-Gemfile.lock
