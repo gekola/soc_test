@@ -17,6 +17,7 @@ describe ResultsController do
     describe "testing failures:" do
 
       before(:each) do
+	session[:can_post] = true
 	@attr = {:answers => []}
       end
 
@@ -69,12 +70,20 @@ describe ResultsController do
 	    end.should_not change(@que.answers,:count)
 	  end
         end
+	
+	it "should not create a result if session[:can_post] if false" do
+	  lambda do
+	    session[:can_post] = false
+	    post :create, @attr
+	  end.should_not change(Result,:count)
+	end
       end
     end
 
     describe "testing success:" do
 
       before(:each) do
+	session[:can_post] = true
 	@questionary = Factory(:questionary)
 	@que1 = Factory(:question, :questionary => @questionary)
 	@ans1 = Factory(:answer, :question => @que1)
