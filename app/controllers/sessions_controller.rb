@@ -24,11 +24,7 @@ class SessionsController < ApplicationController
 
   private
     def authenticate(password)
-      return true if !APP_CONFIG['perform_authentication'] ||
-        encrypt(password) == APP_CONFIG['password_hash']
-    end
-
-    def encrypt(string)
-      Digest::SHA2.hexdigest(string)
+      return true if password ==
+        (ENV['password'] || "secret")
     end
 end
