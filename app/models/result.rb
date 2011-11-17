@@ -1,52 +1,57 @@
+module M
+  attr :i
+
+  def i=(x)
+    @i=x
+  end
+
+  def to_i
+    @i
+  end
+end
+
 class ResultInformationValidator < ActiveModel::Validator
   def validate(record)
+
     b={}
+
     record.information.each do |a_id|
       answer = Answer.find_by_id(a_id)
       if answer.nil?
-        a = "Answer with id = #{a_id} does not seem to exist"
-        def a.to_i
-          a_id
-        end
-        record.errors[:information] << a
+        add_err(record, a_id, "Answer with id = #{a_id} does not seem to exist")
       else
-        if answer.question.questionary_id != record.questionary_id
-          a = "Question ##{answer.question.num} does not " +
-               "belong to the same questionary as the result"
-          def a.to_i
-            a_id
-          end
-          record.errors[:information] << a
-        end
-        if !answer.verified? && answer.result_id != record.id
-          a = "A new answer ##{Answer.find(a_id).num} (question ##{answer.question.num}) " +
-               "does not belong to the result"
-          def a.to_i
-            a_id
-          end
-          record.errors[:information] << a
-        end
+        add_err(record, a_id, "Question ##{answer.question.num} does not " +
+                "belong to the same questionary as the result") if
+          answer.question.questionary_id != record.questionary_id
+
+        add_err(record, a_id, "A new answer ##{Answer.find(a_id).num}" +
+                "(question ##{answer.question.num}) does not belong to the result") if
+          !answer.verified? && answer.result_id != record.id
         b[answer.question.id] = b[answer.question.id].nil? ? 1 : b[answer.question.id] + 1
       end
     end
     record.questionary.questions.each do |question|
       if b[question.id].nil?
-        a = "No answers for question ##{question.num}"
-        def a.to_i
-          question.answers.first.id
-        end
-        record.errors[:information] << a
+        add_err(record, question.answers.first.id, "No answers for question ##{question.num}")
       else
-        if b[question.id]>question.multians
-          a = "Too many answers choosen for question ##{question.num}" +
-               "(#{b[question.id]} choosen, maximum is #{question.multians})"
-          def a.to_i
-            (question.answers.where(:checked => true).map{|a| a.id}&record).last
-          end
-          record.errors[:information] << a
-        end
+        add_err(record, (question.answers.where(:verified => true).map do |a|
+                           a.id
+                         end & record.information).sort.last,
+                "Too many answers choosen for question ##{question.num}" +
+                "(#{b[question.id]} choosen, maximum is #{question.multians})") if
+          b[question.id]>question.multians
       end
     end
+  end
+
+  private
+  def add_err(record,num,msg)
+    a = msg
+    class << a
+      include M
+    end
+    a.i=num
+    record.errors[:information] << a
   end
 end
 
