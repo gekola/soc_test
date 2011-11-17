@@ -130,3 +130,29 @@ span.hint {
   font-size: 90%;
   color: blue;
 }
+
+tr.question_with_error td
+{
+  border: 5px solid red;
+}
+
+tr.question_with_error td.question
+{
+  border-right: 0;
+}
+
+tr.question_with_error td.answers
+{
+  border-left: 0;
+}
+
+div#arrow_down
+{
+  margin:0 auto;
+  width: 100px;
+}
+
+#arrow_down img
+{
+  width:100%;
+}
