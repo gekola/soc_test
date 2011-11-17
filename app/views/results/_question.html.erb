@@ -1,11 +1,15 @@
-<tr>
-  <td>
+<% if with_error %>
+  <tr class="question_with_error">
+<% else %>
+  <tr>
+<% end %>
+  <td class="question">
     <span class="question"><%= "#{question.num}. #{question.content}" %></span>
     <% unless question.multians == 1 %>
       <br /><span class="hint"><%= t ".hint", :count => question.multians %></span>
     <% end %>
   </td>
-  <td>
+  <td class="answers">
     <ul>
       <% question.answers.sort.each do |answer| %>
         <% if answer.verified %>

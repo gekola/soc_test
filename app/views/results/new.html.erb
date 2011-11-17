@@ -1,8 +1,19 @@
 <%= form_for(@result, :url => '/form') do |f| %>
   <%= render 'shared/object_error_messages', :object => f.object %>
   <table>
+    <% error_questions = [] %>
+    <% unless @result.errors[:information].nil? %>
+      <% error_questions = @result.errors[:information].map{|err| Answer.find_by_id(err.to_i)
+                           .question.id if err.respond_to?(:to_i) && !Answer.find_by_id(err.to_i).nil?}.compact.uniq %>
+    <% end %>
     <% @questionary.questions.sort.each do |question| %>
-      <%= render :partial => 'question', :locals => { :question => question, :f => f } %>
+      <% if error_questions.find{ |id| id==question.id }!=nil %>
+        <% error = true %>
+      <% else %>
+        <% error = false %>
+      <% end %>
+      <%= render :partial => 'question', :locals => { :question => question, :f => f,
+                                                      :with_error => error } %>
     <% end %>
   </table>
   <div class="submit_block">
