@@ -1,5 +1,3 @@
-include SessionsHelper
-
 class PagesController < ApplicationController
 
   def home

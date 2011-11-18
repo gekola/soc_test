@@ -1,3 +1,5 @@
+include SessionsHelper
+
 class ResultsController < ApplicationController
   before_filter :authorize, :only => :index
 
