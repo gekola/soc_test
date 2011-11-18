@@ -158,17 +158,20 @@ tr.question_with_error td.answers
 }
 
 #vk_like {
-  float: right;
+  float: left;
   clear: none !important;
+  margin-left: 10px;
+  margin-top: 3px;
 }
 
 #ya_share
 {
   float: left;
+  margin-left: 20px;
 }
 
 #buttons {
   overflow: hidden;
-  width: 300px;
+  width: 305px;
   margin: 0 auto;
 }
