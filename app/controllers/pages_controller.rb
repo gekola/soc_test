@@ -4,15 +4,13 @@ class PagesController < ApplicationController
 
   def home
     reset_session
-    if !cookies[:successfully_posted]
-      can = true
-    else
-      can = false
-    end
-    setSessionParams(:authorized => false, :can_post => can, :can_see_form => true)
   end
 
   def thanks
-    reset_session
+    unless session[:can_see_thanks]
+      redirect_to root_path;
+    else
+      reset_session
+    end
   end
 end

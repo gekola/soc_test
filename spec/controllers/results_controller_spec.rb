@@ -6,16 +6,9 @@ describe ResultsController do
   describe "GET 'new'" do
 
     it "should be success" do
-      session[:can_see_form] = true
       @questionary = Factory(:questionary)
       get :new
       response.should be_success
-    end
-
-    it "should redirect to the root if session is not initialized" do
-      @questionary = Factory(:questionary)
-      get :new
-      response.should redirect_to(root_path)
     end
   end
 
