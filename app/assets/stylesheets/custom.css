@@ -65,11 +65,12 @@ a.participate_button {
   display: block;
   text-align: center;
   width: 190px;
-  color: #FFFFCC;
+  color: #FFFFFF;
   background: #996633;
   font-size: 150%;
   font-weight: bold;
   padding: 20px;
+  text-decoration: none;
 }
 
 /* Navigation */
@@ -98,10 +99,8 @@ nav ul li {
 nav ul li a {
   padding: 0 5px;
   font-weight: bold;
-}
-
-nav ul li a:visited {
-  color: #09c;
+  text-decoration: none;
+  color: #008ab2;
 }
 
 nav ul li a:hover {
@@ -128,7 +127,7 @@ span.question {
 
 span.hint {
   font-size: 90%;
-  color: #6b1515;
+  color: #663333;
 }
 
 tr.question_with_error td
