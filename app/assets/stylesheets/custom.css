@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #cff;
+  background-image: url(/assets/bg.png);
 }
 
 header {
@@ -65,8 +65,8 @@ a.participate_button {
   display: block;
   text-align: center;
   width: 190px;
-  color: #fff;
-  background: #006400;
+  color: #FFFFCC;
+  background: #996633;
   font-size: 150%;
   font-weight: bold;
   padding: 20px;
@@ -146,7 +146,7 @@ tr.question_with_error td.answers
   border-left: 0;
 }
 
-div#arrow_down
+#arrow_down
 {
   margin:0 auto;
   width: 100px;
@@ -155,4 +155,20 @@ div#arrow_down
 #arrow_down img
 {
   width:100%;
+}
+
+#vk_like {
+  float: right;
+  clear: none !important;
+}
+
+#ya_share
+{
+  float: left;
+}
+
+#buttons {
+  overflow: hidden;
+  width: 300px;
+  margin: 0 auto;
 }

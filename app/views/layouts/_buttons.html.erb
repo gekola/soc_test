@@ -1,32 +1,54 @@
 <% if part == :header %>
 
-  <!-- Yandex Share --!>
+  <!-- Yandex Share -->
   <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+
+  <!-- VK Like -->
+  <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?45"></script>
 
 <% else %>
 
-  <!-- Yandex Share --!>
-  <span id="ya_share"></span>
+  <div id="buttons">
+  <!-- Yandex Share -->
+    <span id="ya_share"></span>
 
-  <script type="text/javascript">
-    new Ya.share({
-      element: 'ya_share',
-        elementStyle: {
-          'type': 'icon',
-          'quickServices': ['vkontakte', 'facebook', 'twitter']
-        },
-        link: 'http://socio.heroku.com/',
-        title: 'Опрос — «Роль кинематографа в жизни современного человека»',
-        description: 'Социологический опрос от студентов БГУИР. Поможем ребятам получить автомат =)',
-        popupStyle: {
-          copyPasteField: true
-        },
-        serviceSpecific: {
-          twitter: {
-            title: 'Поучаствуй вместе со мной в опросе от студентов БГУИР: «Роль кинематографа в жизни современного человека»'
+    <script type="text/javascript">
+      new Ya.share({
+        element: 'ya_share',
+          elementStyle: {
+            'type': 'icon',
+            'quickServices': ['vkontakte', 'facebook', 'twitter']
+          },
+          link: 'http://socio.heroku.com/',
+          title: 'Опрос — «Роль кинематографа в жизни современного человека»',
+          description: 'Социологический опрос от студентов БГУИР',
+          image: 'http://socio.heroku.com/assets/logo.png',
+          noparse: true,
+          popupStyle: {
+            copyPasteField: true
+          },
+          serviceSpecific: {
+            twitter: {
+              title: 'Поучаствуй вместе со мной в опросе от студентов БГУИР: «Роль кинематографа в жизни современного человека»'
+            }
           }
-        }
-    });
-  </script>
+      });
+    </script>
 
+    <!-- VK Link -->
+    <div id="vk_like"></div>
+    <script type="text/javascript">
+      window.onload = function () {
+        VK.init({apiId: 2685871, onlyWidgets: true});
+        VK.Widgets.Like('vk_like', {
+          type: 'button',
+          pageTitle: 'Опрос — «Роль кинематографа в жизни современного человека»',
+          pageDescription: 'Социологический опрос от студентов БГУИР.',
+          pageImage: 'http://socio.heroku.com/assets/logo.png',
+          text: 'Пожалуйста, ответьте на несколько вопросов. Нам очень необходимо получить как можно больше результатов.'
+        });
+      }
+    </script>
+
+  </div>
 <% end %>
