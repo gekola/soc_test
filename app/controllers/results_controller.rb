@@ -96,8 +96,7 @@ class ResultsController < ApplicationController
         answers.each do |key,value|
 	  @answers.send("#{key}=",value)
         end
-        flash.now[:error] = "Something went wrong. We can't parse you answers.
-Please make sure, that you fill in everything correctly." # filled the form/questionary?
+        flash.now[:error] = t('error_html', :scope => [:results]).html_safe
         render :new
       end
     end

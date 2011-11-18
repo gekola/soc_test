@@ -15,3 +15,4 @@ en:
       submit: Send form
     question:
       hint: No more than %{count} answers
+    error_html: Something went wrong. We can't parse you answers.<br /> Please make sure, that you fill in everything correctly.
