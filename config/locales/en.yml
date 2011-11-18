@@ -16,3 +16,17 @@ en:
     question:
       hint: No more than %{count} answers
     error_html: Something went wrong. We can't parse you answers.<br /> Please make sure, that you fill in everything correctly.
+  errors:
+    attributes:
+      information:
+        blank: "is empty. Please fill it in."
+        ans_not_exist: "contain answer (id = %{a_id}) seems not existant"
+        external_q: "answers question #%{num}, which does not belong to the same questionary as the result."
+        external_new_a: "contain new answer #%{ans} (question #%{quest}), which does not belong to the result."
+        empty_q: "has no answers for question #%{quest}."
+        too_many_a: "has too many answers choosen for question #%{q_num} (%{q_cho} choosen, maximum is %{q_max})."
+    body: "There where following problems:"
+  activerecord:
+    attributes:
+      result:
+        information: "The form"

@@ -13,32 +13,37 @@ end
 class ResultInformationValidator < ActiveModel::Validator
   def validate(record)
 
+    t_prefix = 'errors.attributes.information.'
     b={}
 
     record.information.each do |a_id|
       answer = Answer.find_by_id(a_id)
       if answer.nil?
-        add_err(record, a_id, "Answer with id = #{a_id} does not seem to exist")
+        add_err(record, a_id, I18n.t(t_prefix+'ans_not_exist', :a_id => a_id))
       else
-        add_err(record, a_id, "Question ##{answer.question.num} does not " +
-                "belong to the same questionary as the result") if
+        add_err(record, a_id, I18n.t(t_prefix+'external_q',
+                                     :num => answer.question.num)) if
           answer.question.questionary_id != record.questionary_id
 
-        add_err(record, a_id, "A new answer ##{Answer.find(a_id).num}" +
-                "(question ##{answer.question.num}) does not belong to the result") if
+        add_err(record, a_id, I18n.t(t_prefix+'external_new_a',
+                                     :ans => Answer.find(a_id).num,
+                                     :quest => answer.question.num)) if
           !answer.verified? && answer.result_id != record.id
-        b[answer.question.id] = b[answer.question.id].nil? ? 1 : b[answer.question.id] + 1
+        b[answer.question.id].nil? ? b[answer.question.id]=0 : nil
+        b[answer.question.id] += 1
       end
     end
     record.questionary.questions.each do |question|
       if b[question.id].nil?
-        add_err(record, question.answers.first.id, "No answers for question ##{question.num}")
+        add_err(record, question.answers.first.id, I18n.t(t_prefix+'empty_q',
+                                                          :quest => question.num))
       else
         add_err(record, (question.answers.where(:verified => true).map do |a|
                            a.id
                          end & record.information).sort.last,
-                "Too many answers choosen for question ##{question.num}" +
-                "(#{b[question.id]} choosen, maximum is #{question.multians})") if
+                I18n.t(t_prefix+'too_many_a', :q_num => question.num,
+                       :q_cho => b[question.id],
+                       :q_max => question.multians)) if
           b[question.id]>question.multians
       end
     end
