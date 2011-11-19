@@ -11,4 +11,8 @@ class PagesController < ApplicationController
       reset_session
     end
   end
+
+  def authors
+    @title = t "pages.authors.title"
+  end
 end

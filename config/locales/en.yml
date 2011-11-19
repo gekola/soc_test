@@ -4,10 +4,13 @@ en:
       title: Survey Research
     header:
       home: Home
+      authors: Authors
   pages:
     home:
       header: Survey Research
       participate_button: Participate
+    authors:
+      title: Authors
   results:
     extra_answer:
       other: Other variant

@@ -13,6 +13,7 @@ SocTest::Application.routes.draw do
   match '/form', :to => 'results#new', :via => :get
   match '/form', :to => 'results#create', :via => :post
   match '/thanks', :to => 'pages#thanks'
+  match '/authors', :to => 'pages#authors'
 
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'

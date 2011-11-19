@@ -184,3 +184,19 @@ tr.question_with_error td.answers
 {
   margin-bottom: 10px;
 }
+
+#authors
+{
+  width: 198px;
+  margin: 0 auto;
+}
+
+#authors ul
+{
+  margin-left: 20px;
+}
+
+#gratitude p
+{
+  text-align: center;
+}
