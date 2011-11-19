@@ -11,7 +11,7 @@ class ResultsController < ApplicationController
   def new
     @questionary = Questionary.first
     @result = Result.new
-    @title = "Form"
+    @title = t "results.new.title"
 
     if !cookies[:successfully_posted]
       can = true

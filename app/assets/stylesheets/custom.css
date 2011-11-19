@@ -1,5 +1,5 @@
 .container {
-  width: 800px;
+  width: 70%;
 }
 
 body {
@@ -173,4 +173,14 @@ tr.question_with_error td.answers
   overflow: hidden;
   width: 305px;
   margin: 0 auto;
+}
+
+.explanation
+{
+  margin-bottom: 30px;
+}
+
+.explanation ul
+{
+  margin-bottom: 10px;
 }
