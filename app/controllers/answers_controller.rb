@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
     @title = "Creating new answer"
   end
 
-  def create 
+  def create
     if params[:verified].nil?
       params[:answer][:verified] = true
     else
@@ -24,7 +24,6 @@ class AnswersController < ApplicationController
 
   def edit
     @answer = Answer.find(params[:id])
-    @answer.verified = true
     @title = "Edit answer"
   end
 
@@ -37,9 +36,41 @@ class AnswersController < ApplicationController
     end
   end
 
+  def verify
+    @questionary = Questionary.find(params[:q_id])
+    @ans = @questionary.questions.map do |question|
+      an_c = question.answers.where(:verified => false).first
+      an_c.verified = true unless an_c.nil?
+      an_c
+    end.flatten.compact
+    redirect_to @questionary if @ans.empty?
+  end
+
+  def join
+    @left = Answer.find(params[:l_id])
+    @right = Answer.find(params[:r_id])
+    @result = @right.result
+    @result.information.map! { |x| x == @right.id ? @left.id : x }.uniq!
+    @result.answers.map! { |x| x == @right ? nil : x }.compact!
+    destruct(@right)
+    redirect_to url_for(:controller => :answers, :action => :verify, :q_id => @right.question.questionary.id)
+  end
+
   def destroy
     @answer = Answer.find(params[:id])
-    @answer.destroy
+    destruct(@answer)
     redirect_to @answer.question
   end
+
+  private
+
+  def destruct(answer)
+    @start_num = answer.num
+    answers = answer.question.answers
+    answer.destroy
+    answers.each do |answer|
+      answer.num > @start_num ? answer.update_attributes!(:num => answer.num-1) : nil
+    end
+  end
+
 end

@@ -1,0 +1,25 @@
+<h1> Some answers are to be verified</h1>
+<% @ans.each do |answer| %>
+  <h3>
+    <%= answer.question.num %>.
+    <%= answer.question.content %>
+  </h3>
+  <%= form_for(answer) do |form| %>
+    <%= render 'shared/object_error_messages', :object => form.object %>
+    <div class="field">
+      <%= answer.num %>.
+      <%= form.text_field :content %>
+    </div>
+    <%= form.hidden_field :verified, :value => '1' %>
+    <div class="actions">
+      <%= form.submit "Verify!" %>
+    </div>
+  <% end %>
+  <br />
+  <% answer.question.answers.where( :verified => true ).inject(answer) do |answer, valid_answer| %>
+    <%= valid_answer.num %>. <%= valid_answer.content %>
+    (<%= link_to "join", { :controller => :answers, :action => :join, :l_id => valid_answer.id, :r_id => answer.id} %>)
+    <br />
+    <% answer %>
+  <% end %>
+<% end %>

@@ -4,7 +4,7 @@ SocTest::Application.routes.draw do
 
   resources :questionaries
   resources :questions
-  resources :answers, :only => [:new, :create, :destroy, :edit, :update]
+  resources :answers, :only => [:new, :create, :destroy, :edit, :update, :verify]
   resources :results, :only => [:index]
   resources :sessions, :only => [:new, :create, :destroy]
 
@@ -14,6 +14,9 @@ SocTest::Application.routes.draw do
   match '/form', :to => 'results#create', :via => :post
   match '/thanks', :to => 'pages#thanks'
   match '/authors', :to => 'pages#authors'
+
+  match '/answers/verify', :to => 'answers#verify'
+  match '/answers/join', :to => 'answers#join'
 
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
