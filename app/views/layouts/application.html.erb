@@ -7,7 +7,8 @@
     <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "application" %>
     <%= render :partial => 'layouts/buttons', :locals => { :part => :header } %>
-    <%= render 'layouts/analytics' %>
+    <% # render 'layouts/analytics' %>
+    <%= yield :js_includes %>
   </head>
   <body>
     <div class="container">

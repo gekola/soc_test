@@ -18,6 +18,9 @@ SocTest::Application.routes.draw do
   match '/answers/verify', :to => 'answers#verify'
   match '/answers/join', :to => 'answers#join'
 
+  match 'stat', :to => 'results#statistics'
+  match 'graph', :to => 'results#statistics.js'
+
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
 end

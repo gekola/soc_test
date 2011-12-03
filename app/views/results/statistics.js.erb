@@ -1,0 +1,39 @@
+//var a = new Array(<%=  %>);
+var r = 80;
+
+var colors = new Array("red","green","yellow","blue","pink","black","orange","margenta");
+
+var quest = 0;
+var ans = [];
+
+drawDiagram = function(a) {
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+  context.moveTo(context.canvas.width/2,context.canvas.height/2);
+  workdiam = Math.min(context.canvas.width,context.canvas.height);
+  r = workdiam*0.33;
+
+  var sum = 0;
+  for (var i=0; i<a.length; i+=1) {
+    sum+=a[i];
+  }
+
+  var b=new Array(0,0);
+  for (var i=0; i<a.length; i+=1) {
+    b[i+1]=a[i]*2*Math.PI/sum+b[i];
+
+    context.beginPath();
+    context.lineTo(100+r*Math.cos(b[i]),100+r*Math.sin(b[i]));
+    context.arc(100,100,r,b[i],b[i+1],false);
+    context.lineTo(100,100);
+    context.closePath();
+    context.fillStyle = colors[i];
+    context.fill();
+    context.stroke();
+  }
+};
+
+window.onload = function() {
+    alert("<%= params[:q_id] %>");
+    drawDiagram(0,1,0);
+};

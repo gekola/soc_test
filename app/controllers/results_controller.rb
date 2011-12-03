@@ -106,6 +106,20 @@ class ResultsController < ApplicationController
     end
   end
 
+  def statistics
+    if params[:q_id].nil?
+      @questionary = Questionary.first
+    else
+      @questionary = Questionary.find(params[:q_id])
+    end
+    @par = Hash.new
+    @par[:count] = params[:count]
+    @par[:count] ||= 0.to_s
+    (0...@par[:count].to_i).each do |i|
+      @par["a#{i}".to_sym]=params["a#{i}".to_sym]
+    end if @par[:count] != "0"
+  end
+
   private
   def createNewAns(question, value)
     if question.extra_answer
