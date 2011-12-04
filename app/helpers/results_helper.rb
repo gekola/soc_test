@@ -38,8 +38,8 @@ module ResultsHelper
         else
           i
         end
-        param["a_#{filter.length-1}"] = nil
       end
+      param["a_#{filter.length-1}".to_sym] = nil
     else
       param = param.merge({ :count => filter.length+1, "a_#{filter.length}".to_sym => ans })
     end
