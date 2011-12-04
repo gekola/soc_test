@@ -1,5 +1,4 @@
-//var a = new Array(<%=  %>);
-var r = 80;
+var r = 0.33
 
 var colors = new Array("red","green","yellow","blue","pink","black","orange","margenta");
 
@@ -11,7 +10,7 @@ drawDiagram = function(a) {
   var context = canvas.getContext('2d');
   context.moveTo(context.canvas.width/2,context.canvas.height/2);
   workdiam = Math.min(context.canvas.width,context.canvas.height);
-  r = workdiam*0.33;
+  r = workdiam*r;
 
   var sum = 0;
   for (var i=0; i<a.length; i+=1) {
@@ -31,9 +30,4 @@ drawDiagram = function(a) {
     context.fill();
     context.stroke();
   }
-};
-
-window.onload = function() {
-    alert("<%= params[:q_id] %>");
-    drawDiagram(0,1,0);
 };

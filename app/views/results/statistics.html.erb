@@ -1,40 +1,56 @@
+<% params[:question]=@questionary.questions.first.id if params[:question].nil? %>
+
 <% content_for :js_includes do %>
-<% javascript_include_tag "/graph" %>
+  <% javascript_include_tag "/graph" %>
 <% end %>
 
-<canvas id="canvas">
-</canvas>
+<div id="canvas_div">
+  <canvas id="canvas" width="300" height="300"> </canvas>
+</div>
 
-<script type="text/javascript">
-  <% params[:question]=@questionary.questions.first.id if params[:question].nil? %>
-  drawDiagram(<%= Question.find(params[:question]).answers.map do |ans|
-                  getstatistics({:q => @questionary, :a => ans.id, :f => filter})
-  end %>);
-</script>
-
-
-<div>
+<div id="legend">
   <table>
-    <tr>
-      <th>Question: </th>
-      <% (1..numOfColumns(@questionary)).each do |i| %>
-        <th><%= i.to_s %></th>
-      <% end %>
-    </tr>
-    <% @questionary.questions.each do |quest| %>
+    <% Question.find(params[:question]).answers.each do |ans| %>
       <tr>
+        <td id="<%=ans.id%>"></td>
         <td>
-          <%= link_to  quest.content %>
+          <%= ans.to_format_s %>
+          (<%= 100 * (getstatistics({ :q => @questionary, :a => ans.id }))/getstatistics({ :q => @questionary, :a => 0 }) %>%)
         </td>
-        <% quest.answers.each do |ans| %>
-          <td>
-            <div>
-              <%= getstatistics ({:q => @questionary, :a => ans.id, :f=> filter}) %>
-              (<%= ans.content %>)
-            </div>
-          </td>
-        <% end %>
-      </td>
+      </tr>
     <% end %>
   </table>
 </div>
+
+<script type="text/javascript">
+  drawDiagram(<%= Question.find(params[:question]).answers.map do |ans|
+                  getstatistics({:q => @questionary, :a => ans.id })
+  end %>);
+  <% Question.find(params[:question]).answers.each do |ans| %>
+    var x = document.getElementById("<%= ans.id %>");
+    x.style.background = colors[<%= ans.num-1 %>];
+  <% end %>
+</script>
+
+<!--div-->
+<table>
+  <tr>
+    <th>Question: </th>
+    <% (1..numOfColumns(@questionary)).each do |i| %>
+      <th><%= i %></th>
+    <% end %>
+  </tr>
+  <% @questionary.questions.each do |quest| %>
+    <tr>
+      <td>
+        <%= link_to  quest.content, params.merge(:question => quest.id) %>
+      </td>
+      <% quest.answers.each do |ans| %>
+        <td>
+          <%= gs = getstatistics ({ :q => @questionary, :a => ans.id }) %>
+          <%= link_to "(" + (100*gs/@questionary.results.length).to_s + "%)", chparams(ans.id), {:title => ans.to_format_s } %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

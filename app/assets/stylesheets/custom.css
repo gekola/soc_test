@@ -200,3 +200,22 @@ tr.question_with_error td.answers
 {
   text-align: center;
 }
+
+/* Canvas */
+#canvas_div
+{
+  width: 300px;
+  height: 300px;
+  float: left;
+  margin-left: 70px;
+  margin-top: 15px;
+}
+
+/* Legend */
+#legend
+{
+  width: 450px;
+  float: right;
+  margin-right: 20px;
+  margin-top: 30px;
+}
