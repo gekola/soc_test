@@ -9,6 +9,7 @@
 </div>
 
 <div id="legend">
+  <h4><%= Question.find(params[:question]).to_format_s %></h4>
   <table>
     <% Question.find(params[:question]).answers.each do |ans| %>
       <tr>
@@ -32,25 +33,38 @@
   <% end %>
 </script>
 
-<!--div-->
-<table>
-  <tr>
-    <th>Question: </th>
-    <% (1..numOfColumns(@questionary)).each do |i| %>
-      <th><%= i %></th>
+<div>
+  <h3>Критерии:</h3>
+  <table>
+    <% filter.each do |ans| %>
+      <tr>
+        <td> <%= Answer.find(ans).question.to_format_s %> </td>
+        <td> <%= Answer.find(ans).to_format_s %> </td>
+      </tr>
     <% end %>
-  </tr>
-  <% @questionary.questions.each do |quest| %>
+  </table>
+</div>
+
+<div>
+  <table>
     <tr>
-      <td>
-        <%= link_to  quest.content, params.merge(:question => quest.id) %>
-      </td>
-      <% quest.answers.each do |ans| %>
-        <td>
-          <%= gs = getstatistics ({ :q => @questionary, :a => ans.id }) %>
-          <%= link_to "(" + (100*gs/@questionary.results.length).to_s + "%)", chparams(ans.id), {:title => ans.to_format_s } %>
-        </td>
+      <th>Question: </th>
+      <% (1..numOfColumns(@questionary)).each do |i| %>
+        <th><%= i %></th>
       <% end %>
     </tr>
-  <% end %>
-</table>
+    <% @questionary.questions.each do |quest| %>
+      <tr>
+        <td>
+          <%= link_to  quest.content, params.merge(:question => quest.id) %>
+        </td>
+        <% quest.answers.each do |ans| %>
+          <td>
+            <%= gs = getstatistics ({ :q => @questionary, :a => ans.id }) %>
+            <%= link_to "(" + (100*gs/@questionary.results.length).to_s + "%)", chparams(ans.id), {:title => ans.to_format_s } %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>
